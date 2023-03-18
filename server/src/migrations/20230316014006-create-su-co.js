@@ -22,10 +22,38 @@ module.exports = {
         type: Sequelize.STRING,
       },
       ngayPhanAnh: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        get() {
+          const rawValue = this.getDataValue("ngayPhanAnh");
+          if (rawValue === null) {
+            return null;
+          }
+          // Format the date as dd/mm/yy
+          const formattedDate = new Date(rawValue).toLocaleDateString("en-GB");
+          return formattedDate;
+        },
+        set(value) {
+          // Parse the date from dd/mm/yy to a Date object
+          const parsedDate = value ? new Date(value) : null;
+          this.setDataValue("ngayPhanAnh", parsedDate);
+        },
       },
       ngayKhacPhuc: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        get() {
+          const rawValue = this.getDataValue("ngayKhacPhuc");
+          if (rawValue === null) {
+            return null;
+          }
+          // Format the date as dd/mm/yy
+          const formattedDate = new Date(rawValue).toLocaleDateString("en-GB");
+          return formattedDate;
+        },
+        set(value) {
+          // Parse the date from dd/mm/yy to a Date object
+          const parsedDate = value ? new Date(value) : null;
+          this.setDataValue("ngayKhacPhuc", parsedDate);
+        },
       },
       sttPhong: {
         type: Sequelize.INTEGER,
