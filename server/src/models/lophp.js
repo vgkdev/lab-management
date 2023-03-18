@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       sttLHP: DataTypes.INTEGER,
       tietBD: DataTypes.INTEGER,
       soTiet: DataTypes.INTEGER,
-      namHoc: DataTypes.INTEGER,
+      namHoc: DataTypes.STRING,
       hocKy: DataTypes.INTEGER,
       maHP: DataTypes.STRING,
       thu: DataTypes.STRING,

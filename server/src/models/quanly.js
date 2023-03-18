@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   QuanLy.init(
     {
       sttPhong: DataTypes.INTEGER,
-      namHoc: DataTypes.INTEGER,
+      namHoc: DataTypes.STRING,
       maCB: DataTypes.STRING,
     },
     {

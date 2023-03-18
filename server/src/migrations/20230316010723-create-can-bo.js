@@ -27,6 +27,18 @@ module.exports = {
       hoTen: {
         type: Sequelize.STRING,
       },
+      email: {
+        type: Sequelize.STRING,
+      },
+      SDT: {
+        type: Sequelize.STRING,
+      },
+      diaChi: {
+        type: Sequelize.STRING,
+      },
+      chucVu: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

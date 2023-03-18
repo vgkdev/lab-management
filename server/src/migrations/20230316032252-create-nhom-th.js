@@ -31,7 +31,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
       namHoc: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         references: {
           model: "NamHoc",
           key: "namHoc",

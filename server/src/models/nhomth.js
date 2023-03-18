@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       soLuong: DataTypes.INTEGER,
       yeuCauPhanMem: DataTypes.STRING,
       maCB: DataTypes.STRING,
-      namHoc: DataTypes.INTEGER,
+      namHoc: DataTypes.STRING,
       maHP: DataTypes.STRING,
       hocKy: DataTypes.INTEGER,
       sttLHP: DataTypes.INTEGER,

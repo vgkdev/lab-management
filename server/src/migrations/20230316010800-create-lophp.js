@@ -13,6 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
       },
       tietBD: {
         type: Sequelize.INTEGER,
@@ -21,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       namHoc: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: "NamHoc",

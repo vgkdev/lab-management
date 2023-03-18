@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Namhoc.init(
     {
-      namHoc: DataTypes.INTEGER,
+      namHoc: DataTypes.STRING,
     },
     {
       sequelize,

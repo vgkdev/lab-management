@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("QuanLy", {
-      id: {
+      idQuanLy: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -20,7 +20,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
       namHoc: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: "NamHoc",

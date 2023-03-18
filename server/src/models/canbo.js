@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       maCB: DataTypes.STRING,
       maDV: DataTypes.STRING,
       hoTen: DataTypes.STRING,
+      email: DataTypes.STRING,
+      SDT: DataTypes.STRING,
+      diaChi: DataTypes.STRING,
+      chucVu: DataTypes.STRING,
     },
     {
       sequelize,
