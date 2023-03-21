@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       HocPhan.hasMany(models.LopHP, {
-        foreignKey: "maHP",
+        foreignKey: "fk_HocPhan_LopHP",
       });
       HocPhan.hasMany(models.NhomTH, {
-        foreignKey: "maHP",
+        foreignKey: "fk_HocPhan_NhomTH",
       });
     }
   }
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "HocPhan",
+      tableName: "hocphan",
     }
   );
   return HocPhan;

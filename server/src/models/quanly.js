@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       QuanLy.belongsTo(models.Phong);
-      QuanLy.belongsTo(models.namHoc);
+      QuanLy.belongsTo(models.NamHoc);
       QuanLy.belongsTo(models.CanBo);
     }
   }
@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "QuanLy",
+      tableName: "quanly",
     }
   );
   return QuanLy;

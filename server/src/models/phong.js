@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Phong.hasMany(models.QuanLy, {
-        foreignKey: "sttPhong",
+        foreignKey: "fk_Phong_QuanLy",
       });
       Phong.hasMany(models.SuCo, {
-        foreignKey: "sttPhong",
+        foreignKey: "fk_Phong_SuCo",
       });
       Phong.hasMany(models.LichTH, {
-        foreignKey: "sttPhong",
+        foreignKey: "fk_Phong_LichTH",
       });
     }
   }
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Phong",
+      tableName: "phong",
     }
   );
   return Phong;

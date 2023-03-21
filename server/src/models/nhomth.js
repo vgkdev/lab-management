@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       NhomTH.belongsTo(models.HocKy);
       NhomTH.belongsTo(models.LopHP);
       NhomTH.hasMany(models.LichTH, {
-        foreignKey: "idNhom",
+        foreignKey: "fk_NhomTH_LichTH",
       });
     }
   }
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "NhomTH",
+      tableName: "nhomth",
     }
   );
   return NhomTH;

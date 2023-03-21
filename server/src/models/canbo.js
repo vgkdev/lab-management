@@ -12,16 +12,16 @@ module.exports = (sequelize, DataTypes) => {
       CanBo.belongsTo(models.DonVi);
 
       CanBo.hasMany(models.LopHP, {
-        foreignKey: "maCB",
+        foreignKey: "fk_CanBo_LopHP",
       });
       CanBo.hasMany(models.QuanLy, {
-        foreignKey: "maCB",
+        foreignKey: "fk_CanBo_QuanLy",
       });
       CanBo.hasMany(models.SuCo, {
-        foreignKey: "maCB",
+        foreignKey: "fk_CanBo_SuCo",
       });
       CanBo.hasMany(models.NhomTH, {
-        foreignKey: "maCB",
+        foreignKey: "fk_CanBo_NhomTH",
       });
     }
   }
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       maDV: DataTypes.STRING,
       hoTen: DataTypes.STRING,
       email: DataTypes.STRING,
+      password: DataTypes.STRING,
       SDT: DataTypes.STRING,
       diaChi: DataTypes.STRING,
       chucVu: DataTypes.STRING,
@@ -38,6 +39,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "CanBo",
+      tableName: "canbo",
+      id: false,
+      autoIncrement: false,
+      primaryKey: false,
+
+      // freezeTableName: true,
+      // id: false,
     }
   );
   return CanBo;

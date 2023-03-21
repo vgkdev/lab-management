@@ -12,7 +12,6 @@ module.exports = {
       maCB: {
         type: Sequelize.STRING,
         primaryKey: true,
-        primaryKey: true,
       },
       maDV: {
         type: Sequelize.STRING,
@@ -28,6 +27,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       email: {
+        type: Sequelize.STRING,
+      },
+      password: {
         type: Sequelize.STRING,
       },
       SDT: {
