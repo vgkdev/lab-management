@@ -34,8 +34,20 @@ const handleGetAllUsers = async (req, res) => {
   }
 };
 
+const handleEditUser = async (req, res) => {
+  const message = await userService.editUser(req.body);
+  return res.status(200).json(message);
+};
+
+const handleDeleteUser = async (req, res) => {
+  const message = await userService.deleteUser(req.body.maCB);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   handleCreateNewUser,
   handleUserLogin,
   handleGetAllUsers,
+  handleEditUser,
+  handleDeleteUser,
 };

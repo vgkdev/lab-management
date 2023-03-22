@@ -212,8 +212,107 @@ const getAllUsers = (maCB) => {
   });
 };
 
+const editUser = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.maCB) {
+        resolve({
+          errCode: 2,
+          message: "Missing parameters !",
+        });
+      }
+
+      const [numAffectedRows, updatedRows] = await db.CanBo.update(
+        {
+          maDV: data.maDV,
+          hoTen: data.hoTen,
+          SDT: data.SDT,
+          diaChi: data.diaChi,
+          chucVu: data.chucVu,
+        },
+        {
+          where: { maCB: data.maCB },
+          attributes: ["maCB", "maDV", "hoTen", "SDT", "diaChi", "chucVu"],
+          returning: true,
+          plain: true,
+        }
+      );
+      console.log("check update: ", numAffectedRows, updatedRows);
+
+      const user = await db.CanBo.findOne({
+        where: { maCB: data.maCB },
+        raw: false,
+        attributes: ["maCB", "maDV", "hoTen", "SDT", "diaChi", "chucVu"],
+      });
+
+      if (user) {
+        // user.maDV = data.maDV;
+        // user.hoTen = data.hoTen;
+        // user.SDT = data.SDT;
+        // user.diaChi = data.diaChi;
+        // user.chucVu = data.chucVu;
+        // console.log("check user: ", user);
+
+        // await user.save({
+        //   // fields: ["maCB", "maDV", "hoTen", "SDT", "diaChi", "chucVu"],
+        //   attributes: [
+
+        //     "maCB",
+        //     "maDV",
+        //     "hoTen",
+        //     "SDT",
+        //     "diaChi",
+        //     "chucVu",
+        //   ],
+        // });
+        console.log("User updated successfully:", user);
+
+        resolve({
+          errCode: 0,
+          message: "User was edited",
+          user,
+        });
+      } else {
+        resolve({
+          errCode: 1,
+          message: "User not found",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const deleteUser = (maCB) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await db.CanBo.destroy({
+        where: { maCB: maCB },
+        attributes: ["maCB"],
+      });
+      console.log("check delete user: ", user);
+      if (user) {
+        resolve({
+          errCode: 0,
+          message: "The user has been deleted",
+        });
+      } else {
+        resolve({
+          errCode: 2,
+          message: "User not found !",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewUser,
   userLogin,
   getAllUsers,
+  editUser,
+  deleteUser,
 };
