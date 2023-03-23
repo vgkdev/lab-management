@@ -1,6 +1,7 @@
 import express from "express";
 import userController from "../controllers/userController";
 import facultyController from "../controllers/facultyController";
+import courseController from "../controllers/courseController";
 
 let router = express.Router();
 
@@ -15,6 +16,11 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-faculty", facultyController.handleGetAllFaculty);
   router.put("/edit-faculty", facultyController.handleEditFaculty);
   router.delete("/delete-faculty", facultyController.handleDeleteFaculty);
+
+  router.post("/create-new-course", courseController.handleCreateNewCourse);
+  router.get("/get-all-course", courseController.handleGetAllCourse);
+  router.put("/edit-course", courseController.handleEditCourse);
+  router.delete("/delete-course", courseController.handleDeleteCourse);
 
   return app.use("/api/v1/", router);
 };

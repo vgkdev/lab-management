@@ -8,7 +8,7 @@ const createNewFaculty = (data) => {
         attributes: ["maDV"],
       });
 
-      if (isExist === true) {
+      if (isExist) {
         resolve({
           errCode: 1,
           message: "faculty existed",
