@@ -72,6 +72,18 @@ const editCourse = (data) => {
         });
       }
 
+      const isExist = await db.HocPhan.findOne({
+        where: { maHP: data.newMaHP },
+        attributes: ["maHP"],
+      });
+
+      if (isExist) {
+        resolve({
+          errCode: 2,
+          message: "Course was existed",
+        });
+      }
+
       const [numAffectedRows, updatedRows] = await db.HocPhan.update(
         {
           maHP: data.newMaHP,

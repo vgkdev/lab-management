@@ -71,6 +71,18 @@ const editFaculty = (data) => {
         });
       }
 
+      const isExist = await db.DonVi.findOne({
+        where: { maDV: data.newMaDV },
+        attributes: ["maDV"],
+      });
+
+      if (isExist) {
+        resolve({
+          errCode: 2,
+          message: "Faculty was existed",
+        });
+      }
+
       const [numAffectedRows, updatedRows] = await db.DonVi.update(
         {
           maDV: data.newMaDV,
