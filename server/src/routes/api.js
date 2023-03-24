@@ -11,6 +11,13 @@ import {
   handleDeleteClassroom,
 } from "../controllers/classroomController";
 
+import {
+  handleCreateNewIncident,
+  handleGetAllIncident,
+  handleEditIncident,
+  handleDeleteIncident,
+} from "../controllers/incidentController";
+
 let router = express.Router();
 
 let initAPIRoutes = (app) => {
@@ -47,6 +54,11 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-classroom", handleGetAllClassroom);
   router.put("/edit-classroom", handleEditClassroom);
   router.delete("/delete-classroom", handleDeleteClassroom);
+
+  router.post("/create-new-incident", handleCreateNewIncident);
+  router.get("/get-all-incident", handleGetAllIncident);
+  router.put("/edit-incident", handleEditIncident);
+  router.delete("/delete-incident", handleDeleteIncident);
 
   return app.use("/api/v1/", router);
 };
