@@ -3,6 +3,7 @@ import userController from "../controllers/userController";
 import facultyController from "../controllers/facultyController";
 import courseController from "../controllers/courseController";
 import yearController from "../controllers/yearController";
+import softwareController from "../controllers/softwareController";
 
 let router = express.Router();
 
@@ -27,6 +28,14 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-year", yearController.handleGetAllYear);
   router.put("/edit-year", yearController.handleEditYear);
   router.delete("/delete-year", yearController.handleDeleteYear);
+
+  router.post(
+    "/create-new-software",
+    softwareController.handleCreateNewSoftware
+  );
+  router.get("/get-all-software", softwareController.handleGetAllSoftware);
+  router.put("/edit-software", softwareController.handleEditSoftware);
+  router.delete("/delete-software", softwareController.handleDeleteSoftware);
 
   return app.use("/api/v1/", router);
 };
