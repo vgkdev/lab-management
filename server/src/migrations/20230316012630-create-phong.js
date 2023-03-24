@@ -11,6 +11,7 @@ module.exports = {
       // },
       sttPhong: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
       },
       tenPhong: {

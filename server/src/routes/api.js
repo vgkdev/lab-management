@@ -4,6 +4,12 @@ import facultyController from "../controllers/facultyController";
 import courseController from "../controllers/courseController";
 import yearController from "../controllers/yearController";
 import softwareController from "../controllers/softwareController";
+import {
+  handleCreateNewClassroom,
+  handleGetAllClassroom,
+  handleEditClassroom,
+  handleDeleteClassroom,
+} from "../controllers/classroomController";
 
 let router = express.Router();
 
@@ -36,6 +42,11 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-software", softwareController.handleGetAllSoftware);
   router.put("/edit-software", softwareController.handleEditSoftware);
   router.delete("/delete-software", softwareController.handleDeleteSoftware);
+
+  router.post("/create-new-classroom", handleCreateNewClassroom);
+  router.get("/get-all-classroom", handleGetAllClassroom);
+  router.put("/edit-classroom", handleEditClassroom);
+  router.delete("/delete-classroom", handleDeleteClassroom);
 
   return app.use("/api/v1/", router);
 };
