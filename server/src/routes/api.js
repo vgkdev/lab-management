@@ -5,11 +5,11 @@ import courseController from "../controllers/courseController";
 import yearController from "../controllers/yearController";
 import softwareController from "../controllers/softwareController";
 import {
-  handleCreateNewClassroom,
-  handleGetAllClassroom,
-  handleEditClassroom,
-  handleDeleteClassroom,
-} from "../controllers/classroomController";
+  handleCreateNewRoom,
+  handleGetAllRoom,
+  handleEditRoom,
+  handleDeleteRoom,
+} from "../controllers/roomController";
 
 import {
   handleCreateNewIncident,
@@ -24,6 +24,13 @@ import {
   handleEditSemester,
   handleDeleteSemester,
 } from "../controllers/semesterController";
+
+import {
+  handleCreateNewClassroom,
+  handleGetAllClassroom,
+  handleEditClassroom,
+  handleDeleteClassroom,
+} from "../controllers/classroomController";
 
 const router = express.Router();
 
@@ -57,10 +64,10 @@ let initAPIRoutes = (app) => {
   router.put("/edit-software", softwareController.handleEditSoftware);
   router.delete("/delete-software", softwareController.handleDeleteSoftware);
 
-  router.post("/create-new-classroom", handleCreateNewClassroom);
-  router.get("/get-all-classroom", handleGetAllClassroom);
-  router.put("/edit-classroom", handleEditClassroom);
-  router.delete("/delete-classroom", handleDeleteClassroom);
+  router.post("/create-new-room", handleCreateNewRoom);
+  router.get("/get-all-room", handleGetAllRoom);
+  router.put("/edit-room", handleEditRoom);
+  router.delete("/delete-room", handleDeleteRoom);
 
   router.post("/create-new-incident", handleCreateNewIncident);
   router.get("/get-all-incident", handleGetAllIncident);
@@ -71,6 +78,11 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-semester", handleGetAllSemester);
   router.put("/edit-semester", handleEditSemester);
   router.delete("/delete-semester", handleDeleteSemester);
+
+  router.post("/create-new-classroom", handleCreateNewClassroom);
+  router.get("/get-all-classroom", handleGetAllClassroom);
+  router.put("/edit-classroom", handleEditClassroom);
+  router.delete("/delete-classroom", handleDeleteClassroom);
 
   return app.use("/api/v1/", router);
 };

@@ -1,42 +1,37 @@
 import db from "../models/index";
-import { Op } from "sequelize";
 
 const createNewClassroom = (data) => {
+  //   console.log("check data: ", data);
   return new Promise(async (resolve, reject) => {
     try {
-      const isExist = await db.Phong.findOne({
-        where: {
-          [Op.or]: [{ sttPhong: data.sttPhong }, { tenPhong: data.tenPhong }],
+      const classroom = await db.LopHP.create(
+        {
+          tietBD: data.tietBD,
+          soTiet: data.soTiet,
+          namHoc: data.namHoc,
+          hocKy: data.hocKy,
+          maHP: data.maHP,
+          thu: data.thu,
+          maCB: data.maCB,
         },
-        attributes: ["sttPhong", "tenPhong"],
+        {
+          fields: [
+            "tietBD",
+            "soTiet",
+            "namHoc",
+            "hocKy",
+            "maHP",
+            "thu",
+            "maCB",
+          ],
+        }
+      );
+
+      resolve({
+        errCode: 0,
+        message: "create new classroom successed",
+        classroom,
       });
-
-      console.log("check exist: ", isExist);
-      if (isExist) {
-        resolve({
-          errCode: 1,
-          message: "classroom existed",
-        });
-      } else {
-        const classroom = await db.Phong.create(
-          {
-            sttPhong: data.sttPhong,
-            tenPhong: data.tenPhong,
-            soMay: data.soMay,
-            cauHinhMay: data.cauHinhMay,
-            ghiChu: data.ghiChu,
-          },
-          {
-            fields: ["sttPhong", "tenPhong", "soMay", "cauHinhMay", "ghiChu"],
-          }
-        );
-
-        resolve({
-          errCode: 0,
-          message: "create new classroom successed",
-          classroom,
-        });
-      }
     } catch (e) {
       reject(e);
     }
@@ -46,8 +41,17 @@ const createNewClassroom = (data) => {
 const getAllClassroom = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const classroom = await db.Phong.findAll({
-        attributes: ["sttPhong", "tenPhong", "soMay", "cauHinhMay", "ghiChu"],
+      const classroom = await db.LopHP.findAll({
+        attributes: [
+          "sttLHP",
+          "tietBD",
+          "soTiet",
+          "namHoc",
+          "hocKy",
+          "maHP",
+          "thu",
+          "maCB",
+        ],
       });
 
       if (classroom) {
@@ -71,37 +75,34 @@ const getAllClassroom = () => {
 const editClassroom = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!data.tenPhong) {
+      if (!data.sttLHP) {
         resolve({
           errCode: 2,
           message: "Missing parameters !",
         });
       }
 
-      if (data.tenPhong !== data.newTenPhong) {
-        const isExist = await db.Phong.findOne({
-          where: { tenPhong: data.newTenPhong },
-          attributes: ["tenPhong"],
-        });
-
-        if (isExist) {
-          resolve({
-            errCode: 2,
-            message: "classroom was existed",
-          });
-        }
-      }
-
-      const [numAffectedRows, updatedRows] = await db.Phong.update(
+      const [numAffectedRows, updatedRows] = await db.LopHP.update(
         {
-          tenPhong: data.newTenPhong,
-          soMay: data.soMay,
-          cauHinhMay: data.cauHinhMay,
-          ghiChu: data.ghiChu,
+          tietBD: data.tietBD,
+          soTiet: data.soTiet,
+          namHoc: data.namHoc,
+          hocKy: data.hocKy,
+          maHP: data.maHP,
+          thu: data.thu,
+          maCB: data.maCB,
         },
         {
-          where: { tenPhong: data.tenPhong },
-          attributes: ["tenPhong", "soMay", "cauHinhMay", "ghiChu"],
+          where: { sttLHP: data.sttLHP },
+          attributes: [
+            "tietBD",
+            "soTiet",
+            "namHoc",
+            "hocKy",
+            "maHP",
+            "thu",
+            "maCB",
+          ],
           returning: true,
           plain: true,
         }
@@ -109,10 +110,18 @@ const editClassroom = (data) => {
       console.log("check update: ", numAffectedRows, updatedRows);
 
       if (updatedRows) {
-        const classroom = await db.Phong.findOne({
-          where: { tenPhong: data.newTenPhong },
-          raw: false,
-          attributes: ["sttPhong", "tenPhong", "soMay", "cauHinhMay", "ghiChu"],
+        const classroom = await db.LopHP.findOne({
+          where: { sttLHP: data.sttLHP },
+          attributes: [
+            "sttLHP",
+            "tietBD",
+            "soTiet",
+            "namHoc",
+            "hocKy",
+            "maHP",
+            "thu",
+            "maCB",
+          ],
         });
 
         console.log("classroom updated successfully:", classroom);
@@ -134,12 +143,12 @@ const editClassroom = (data) => {
   });
 };
 
-const deleteClassroom = (sttPhong) => {
+const deleteClassroom = (sttLHP) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const classroom = await db.Phong.destroy({
-        where: { sttPhong: sttPhong },
-        attributes: ["sttPhong"],
+      const classroom = await db.LopHP.destroy({
+        where: { sttLHP: sttLHP },
+        attributes: ["sttLHP"],
       });
 
       console.log("check delete classroom: ", classroom);

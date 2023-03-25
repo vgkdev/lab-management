@@ -18,7 +18,7 @@ module.exports = {
       tietBD: {
         type: Sequelize.INTEGER,
       },
-      sotiet: {
+      soTiet: {
         type: Sequelize.INTEGER,
       },
       namHoc: {

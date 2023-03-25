@@ -16,7 +16,7 @@ const handleEditClassroom = async (req, res) => {
 };
 
 const handleDeleteClassroom = async (req, res) => {
-  const message = await classroomService.deleteClassroom(req.body.sttPhong);
+  const message = await classroomService.deleteClassroom(req.body.sttLHP);
   return res.status(200).json(message);
 };
 
