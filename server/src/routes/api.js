@@ -18,7 +18,14 @@ import {
   handleDeleteIncident,
 } from "../controllers/incidentController";
 
-let router = express.Router();
+import {
+  handleCreateNewSemester,
+  handleGetAllSemester,
+  handleEditSemester,
+  handleDeleteSemester,
+} from "../controllers/semesterController";
+
+const router = express.Router();
 
 let initAPIRoutes = (app) => {
   router.post("/create-new-user", userController.handleCreateNewUser);
@@ -59,6 +66,11 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-incident", handleGetAllIncident);
   router.put("/edit-incident", handleEditIncident);
   router.delete("/delete-incident", handleDeleteIncident);
+
+  router.post("/create-new-semester", handleCreateNewSemester);
+  router.get("/get-all-semester", handleGetAllSemester);
+  router.put("/edit-semester", handleEditSemester);
+  router.delete("/delete-semester", handleDeleteSemester);
 
   return app.use("/api/v1/", router);
 };
