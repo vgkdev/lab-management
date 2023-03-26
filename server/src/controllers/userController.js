@@ -21,17 +21,8 @@ const handleUserLogin = async (req, res) => {
 };
 
 const handleGetAllUsers = async (req, res) => {
-  const maCB = req.query.maCB;
-  // console.log("check maCB: ", maCB);
-  if (!maCB) {
-    return res.status(400).json({
-      errCode: 1,
-      message: "missing inputs parameter!",
-    });
-  } else {
-    const message = await userService.getAllUsers(maCB);
-    return res.status(200).json(message);
-  }
+  const message = await userService.getAllUsers();
+  return res.status(200).json(message);
 };
 
 const handleEditUser = async (req, res) => {

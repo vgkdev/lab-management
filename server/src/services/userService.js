@@ -150,61 +150,32 @@ const userLogin = (data) => {
   });
 };
 
-const getAllUsers = (maCB) => {
+const getAllUsers = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (maCB === "ALL") {
-        const user = await db.CanBo.findAll({
-          attributes: [
-            "maCB",
-            "maDV",
-            "hoTen",
-            "email",
-            "SDT",
-            "diaChi",
-            "chucVu",
-          ],
-        });
+      const user = await db.CanBo.findAll({
+        attributes: [
+          "maCB",
+          "maDV",
+          "hoTen",
+          "email",
+          "SDT",
+          "diaChi",
+          "chucVu",
+        ],
+      });
 
-        if (user) {
-          resolve({
-            errCode: 0,
-            message: "Get all user successful",
-            user,
-          });
-        } else {
-          resolve({
-            errCode: 0,
-            message: "User list is empty",
-          });
-        }
+      if (user) {
+        resolve({
+          errCode: 0,
+          message: "Get all user successful",
+          user,
+        });
       } else {
-        const user = await db.CanBo.findOne({
-          where: { maCB: maCB },
-          attributes: [
-            "maCB",
-            "maDV",
-            "hoTen",
-            "email",
-            "SDT",
-            "diaChi",
-            "chucVu",
-          ],
+        resolve({
+          errCode: 0,
+          message: "User list is empty",
         });
-
-        // console.log("check user: ", user);
-        if (user) {
-          resolve({
-            errCode: 0,
-            message: "Get user successful",
-            user,
-          });
-        } else {
-          resolve({
-            errCode: 0,
-            message: "User not found",
-          });
-        }
       }
     } catch (e) {
       reject(e);
