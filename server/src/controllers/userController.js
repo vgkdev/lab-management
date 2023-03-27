@@ -31,6 +31,7 @@ const handleEditUser = async (req, res) => {
 };
 
 const handleDeleteUser = async (req, res) => {
+  console.log("check maCB server: ", req.body);
   const message = await userService.deleteUser(req.body.maCB);
   return res.status(200).json(message);
 };

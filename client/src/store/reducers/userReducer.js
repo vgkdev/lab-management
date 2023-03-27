@@ -3,6 +3,8 @@ const initState = {
     maCB: "VGK",
     email: "khang1@gmail.com",
   },
+
+  listUser: [],
 };
 
 const userReducer = (state = initState, action) => {
@@ -10,8 +12,14 @@ const userReducer = (state = initState, action) => {
     case "SET_USER_DATA":
       console.log("check case");
       return {
-        // ...state,
+        ...state,
         userData: action.payload,
+      };
+
+    case "SET_LIST_USER":
+      return {
+        ...state,
+        listUser: action.payload,
       };
 
     default:

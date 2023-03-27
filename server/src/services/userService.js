@@ -128,13 +128,13 @@ const userLogin = (data) => {
             });
           } else {
             resolve({
-              errCode: 3,
+              errCode: 4,
               message: "Wrong password",
             });
           }
         } else {
           resolve({
-            errCode: 2,
+            errCode: 4,
             message: "User not found !",
           });
         }
@@ -173,7 +173,7 @@ const getAllUsers = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "User list is empty",
         });
       }
@@ -184,6 +184,7 @@ const getAllUsers = () => {
 };
 
 const editUser = (data) => {
+  console.log("check data: ", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.maCB) {
@@ -245,7 +246,7 @@ const editUser = (data) => {
         });
       } else {
         resolve({
-          errCode: 1,
+          errCode: 3,
           message: "User not found",
         });
       }
@@ -257,6 +258,12 @@ const editUser = (data) => {
 
 const deleteUser = (maCB) => {
   return new Promise(async (resolve, reject) => {
+    if (!maCB) {
+      resolve({
+        errCode: 1,
+        message: "Missing pamareter !",
+      });
+    }
     try {
       const user = await db.CanBo.destroy({
         where: { maCB: maCB },
