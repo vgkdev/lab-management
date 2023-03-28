@@ -5,6 +5,7 @@ const initState = {
   },
 
   listUser: [],
+  listFaculty: [],
 };
 
 const userReducer = (state = initState, action) => {

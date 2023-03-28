@@ -7,7 +7,7 @@ const Home = (props) => {
 
 const mapStateToProp = (state) => {
   return {
-    userData: state.userData,
+    userData: state.user.userData,
   };
 };
 

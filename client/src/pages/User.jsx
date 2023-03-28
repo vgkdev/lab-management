@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Button, Modal, Form, Col, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
+import { getAllFaculty } from "../api/facultyAPI";
 import {
   createNewUser,
   deleteUser,
@@ -63,7 +64,7 @@ const User = (props) => {
   );
 
   useEffect(() => {
-    const fetchDate = async () => {
+    const fetchData = async () => {
       try {
         if (props.listUser.length !== 0) {
           setUser(props.listUser);
@@ -78,17 +79,29 @@ const User = (props) => {
           props.setListUser(listUser.data.user);
           console.log(listUser.data.user);
         }
+
+        if (props.listFaculty.length !== 0) {
+          return;
+        }
+        const listFaculty = await getAllFaculty();
+
+        if (!listFaculty) {
+          console.log("faculty not found");
+        } else {
+          props.setListFaculty(listFaculty.data.faculty);
+          // console.log("check list faculty: ", listFaculty.data.faculty);
+        }
       } catch (e) {
         console.log("error get all user: ", e);
       }
     };
 
     setTimeout(() => {
-      fetchDate();
+      fetchData();
     }, 1000);
   }, [props]);
 
-  const fetchData = React.useCallback(
+  const fetchDataTable = React.useCallback(
     ({ pageSize, pageIndex }) => {
       const fetchId = ++fetchIdRef.current;
       setLoading(true);
@@ -233,6 +246,7 @@ const User = (props) => {
 
   return (
     <div className="container-fluid">
+      {console.log("check state: ", props.listFaculty)}
       <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           {formEidtUser ? (
@@ -303,8 +317,13 @@ const User = (props) => {
                   onChange={(event) => setMaDV(event.target.value)}
                 >
                   <option value="">--Đơn vị--</option>
-                  <option>CNTT</option>
-                  <option>TTNT</option>
+                  {props.listFaculty.length !== 0 ? (
+                    props.listFaculty.map((item, i) => {
+                      return <option>{item.maDV}</option>;
+                    })
+                  ) : (
+                    <div>Loading...</div>
+                  )}
                 </Form.Select>
               </Form.Group>
 
@@ -364,7 +383,7 @@ const User = (props) => {
           <DataTable
             columns={columns}
             data={data}
-            fetchData={fetchData}
+            fetchData={fetchDataTable}
             loading={loading}
             pageCount={pageCount}
             handleShowModalEdit={handleShowModalEdit}
@@ -384,8 +403,9 @@ const User = (props) => {
 
 const mapStateToProp = (state) => {
   return {
-    userData: state.userData,
-    listUser: state.listUser,
+    userData: state.user.userData,
+    listUser: state.user.listUser,
+    listFaculty: state.faculty.listFaculty,
   };
 };
 
@@ -393,6 +413,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setListUser: (listUser) => {
       dispatch({ type: "SET_LIST_USER", payload: listUser });
+    },
+
+    setListFaculty: (listFaculty) => {
+      dispatch({ type: "SET_LIST_FACULTY", payload: listFaculty });
     },
   };
 };

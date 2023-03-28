@@ -1,6 +1,6 @@
 import "./App.css";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import { connect } from "react-redux";
 import Router from "./routes/Router";
 
@@ -14,7 +14,7 @@ function App(props) {
 
 const mapStateToProp = (state) => {
   return {
-    userData: state.userData,
+    userData: state.user.userData,
   };
 };
 
