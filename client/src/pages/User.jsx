@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, Col, Row, Spinner } from "react-bootstrap";
+import React, { useEffect, useState, useMemo } from "react";
+import { Button, Modal, Form, Col, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   createNewUser,
@@ -7,6 +7,7 @@ import {
   editUser,
   getAllUser,
 } from "../api/userAPI";
+import DataTable from "../components/DataTable";
 
 const User = (props) => {
   const [user, setUser] = useState([]);
@@ -21,6 +22,45 @@ const User = (props) => {
   const [chucVu, setChucVu] = useState("");
   const [formEidtUser, setFormEidtUser] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [pageCount, setPageCount] = React.useState(0);
+  const fetchIdRef = React.useRef(0);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Mã cán bộ",
+        accessor: "maCB",
+      },
+      {
+        Header: "Tên CB",
+        accessor: "hoTen",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Đơn vị",
+        accessor: "maDV",
+      },
+      {
+        Header: "SĐT",
+        accessor: "SDT",
+      },
+      {
+        Header: "Địa chỉ",
+        accessor: "diaChi",
+      },
+      {
+        Header: "Chức vụ",
+        accessor: "chucVu",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     const fetchDate = async () => {
@@ -45,8 +85,30 @@ const User = (props) => {
 
     setTimeout(() => {
       fetchDate();
-    }, 1500);
+    }, 1000);
   }, [props]);
+
+  const fetchData = React.useCallback(
+    ({ pageSize, pageIndex }) => {
+      const fetchId = ++fetchIdRef.current;
+      setLoading(true);
+
+      setTimeout(() => {
+        if (fetchId === fetchIdRef.current) {
+          const startRow = pageSize * pageIndex;
+          const endRow = startRow + pageSize;
+          setData(props.listUser.slice(startRow, endRow));
+
+          // Your server could send back total page count.
+          // For now we'll just fake it, too
+          setPageCount(Math.ceil(props.listUser.length / pageSize));
+
+          setLoading(false);
+        }
+      }, 1000);
+    },
+    [props.listUser]
+  );
 
   const handleClose = () => setShow(false);
 
@@ -62,13 +124,6 @@ const User = (props) => {
     setSDT("");
     setErrMessage("");
     setShow(true);
-  };
-
-  const handleSort = (columnName) => {
-    const sortedUser = user.sort((a, b) =>
-      a[columnName] > b[columnName] ? 1 : b[columnName] > a[columnName] ? -1 : 0
-    );
-    setUser([...sortedUser]);
   };
 
   const handleCreateNewUser = async () => {
@@ -149,7 +204,7 @@ const User = (props) => {
     }
   };
 
-  const handleDelteUser = async (maCB) => {
+  const handleShowModalDelete = async (maCB) => {
     // console.log("check maCB: ", maCB);
 
     const message = await deleteUser(maCB);
@@ -306,102 +361,15 @@ const User = (props) => {
             </div>
           </div>
 
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>
-                  Mã CB
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("maCB")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-
-                <th>
-                  Tên CB
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("hoTen")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-                <th>
-                  Email
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("email")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-                <th>
-                  Đơn vị
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("donVi")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-                <th>
-                  SĐT
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("SDT")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-                <th>
-                  Địa chỉ
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("diaChi")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-                <th>
-                  Chức vụ
-                  <i
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSort("chucVu")}
-                    className="bi bi-caret-down-fill"
-                  ></i>
-                </th>
-                <th>Quản lý</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {user.map((user, index) => (
-                <tr key={index}>
-                  <td>{user.maCB}</td>
-                  <td>{user.hoTen}</td>
-                  <td>{user.email}</td>
-                  <td>{user.maDV}</td>
-                  <td>{user.SDT}</td>
-                  <td>{user.diaChi}</td>
-                  <td>{user.chucVu}</td>
-                  <td>
-                    <Button
-                      variant="light"
-                      onClick={() => handleShowModalEdit(user)}
-                    >
-                      <i className="bi bi-pencil-fill"></i>
-                    </Button>{" "}
-                    {user.chucVu === "Admin" ? (
-                      <></>
-                    ) : (
-                      <Button
-                        variant="light"
-                        onClick={() => handleDelteUser(user.maCB)}
-                      >
-                        <i className="bi bi-archive-fill"></i>
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <DataTable
+            columns={columns}
+            data={data}
+            fetchData={fetchData}
+            loading={loading}
+            pageCount={pageCount}
+            handleShowModalEdit={handleShowModalEdit}
+            handleShowModalDelete={handleShowModalDelete}
+          />
         </div>
       ) : (
         <div className="row justify-content-center my-5">
