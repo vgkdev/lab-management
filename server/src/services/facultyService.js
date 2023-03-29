@@ -51,7 +51,7 @@ const getAllFaculty = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "Faculty list is empty",
         });
       }
@@ -62,6 +62,7 @@ const getAllFaculty = () => {
 };
 
 const editFaculty = (data) => {
+  console.log("check data server: ", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.maDV) {
@@ -71,16 +72,18 @@ const editFaculty = (data) => {
         });
       }
 
-      const isExist = await db.DonVi.findOne({
-        where: { maDV: data.newMaDV },
-        attributes: ["maDV"],
-      });
-
-      if (isExist) {
-        resolve({
-          errCode: 2,
-          message: "Faculty was existed",
+      if (data.maDV !== data.newMaDV) {
+        const isExist = await db.DonVi.findOne({
+          where: { maDV: data.newMaDV },
+          attributes: ["maDV"],
         });
+
+        if (isExist) {
+          resolve({
+            errCode: 1,
+            message: "Faculty was existed",
+          });
+        }
       }
 
       const [numAffectedRows, updatedRows] = await db.DonVi.update(
@@ -113,7 +116,7 @@ const editFaculty = (data) => {
         });
       } else {
         resolve({
-          errCode: 1,
+          errCode: 2,
           message: "Faculty not found",
         });
       }
@@ -124,8 +127,16 @@ const editFaculty = (data) => {
 };
 
 const deleteFaculty = (maDV) => {
+  // console.log("check maDV server: ", maDV);
   return new Promise(async (resolve, reject) => {
     try {
+      if (!maDV) {
+        resolve({
+          errCode: 2,
+          message: "Missing parameters !",
+        });
+      }
+
       const faculty = await db.DonVi.destroy({
         where: { maDV: maDV },
         attributes: ["maDV"],

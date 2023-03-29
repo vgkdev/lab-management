@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Spinner } from "react-bootstrap";
 import { useTable, usePagination, useSortBy } from "react-table";
 
 const DataTable = ({
@@ -9,7 +9,7 @@ const DataTable = ({
   loading,
   pageCount: controlledPageCount,
   handleShowModalEdit,
-  handleShowModalDelete,
+  handleDelete,
 }) => {
   const {
     getTableProps,
@@ -92,7 +92,7 @@ const DataTable = ({
                   ) : (
                     <Button
                       variant="light"
-                      onClick={() => handleShowModalDelete(row.original.maCB)}
+                      onClick={() => handleDelete(row.original)}
                     >
                       <i className="bi bi-archive-fill"></i>
                     </Button>
@@ -103,8 +103,11 @@ const DataTable = ({
           })}
           <tr>
             {loading ? (
-              // Use our custom loading state to show a loading indicator
-              <td colSpan="10000">Loading...</td>
+              <td className="text-center" colSpan="10000">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </td>
             ) : (
               <td colSpan="10000">
                 Showing {page.length} of ~{controlledPageCount * pageSize}{" "}

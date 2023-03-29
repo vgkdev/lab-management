@@ -217,10 +217,10 @@ const User = (props) => {
     }
   };
 
-  const handleShowModalDelete = async (maCB) => {
+  const handleDeleteUser = async (data) => {
     // console.log("check maCB: ", maCB);
 
-    const message = await deleteUser(maCB);
+    const message = await deleteUser(data.maCB);
 
     if (message.data.errCode !== 0) {
       console.log("error delete user: ", message.data.message);
@@ -246,7 +246,6 @@ const User = (props) => {
 
   return (
     <div className="container-fluid">
-      {console.log("check state: ", props.listFaculty)}
       <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           {formEidtUser ? (
@@ -319,7 +318,7 @@ const User = (props) => {
                   <option value="">--Đơn vị--</option>
                   {props.listFaculty.length !== 0 ? (
                     props.listFaculty.map((item, i) => {
-                      return <option>{item.maDV}</option>;
+                      return <option key={i}>{item.maDV}</option>;
                     })
                   ) : (
                     <div>Loading...</div>
@@ -387,7 +386,7 @@ const User = (props) => {
             loading={loading}
             pageCount={pageCount}
             handleShowModalEdit={handleShowModalEdit}
-            handleShowModalDelete={handleShowModalDelete}
+            handleDelete={handleDeleteUser}
           />
         </div>
       ) : (

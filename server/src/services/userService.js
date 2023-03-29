@@ -134,7 +134,7 @@ const userLogin = (data) => {
           }
         } else {
           resolve({
-            errCode: 4,
+            errCode: 3,
             message: "User not found !",
           });
         }
