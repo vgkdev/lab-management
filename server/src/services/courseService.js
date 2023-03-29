@@ -63,6 +63,7 @@ const getAllCourse = () => {
 };
 
 const editCourse = (data) => {
+  console.log("check data server: ", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.maHP) {
@@ -72,16 +73,18 @@ const editCourse = (data) => {
         });
       }
 
-      const isExist = await db.HocPhan.findOne({
-        where: { maHP: data.newMaHP },
-        attributes: ["maHP"],
-      });
-
-      if (isExist) {
-        resolve({
-          errCode: 2,
-          message: "Course was existed",
+      if (data.maHP !== data.newMaHP) {
+        const isExist = await db.HocPhan.findOne({
+          where: { maHP: data.newMaHP },
+          attributes: ["maHP"],
         });
+
+        if (isExist) {
+          resolve({
+            errCode: 2,
+            message: "Course was existed",
+          });
+        }
       }
 
       const [numAffectedRows, updatedRows] = await db.HocPhan.update(

@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 // import SideNav from "../components/SideNav";
 import User from "../pages/User";
 import Faculty from "../pages/Faculty";
+import Course from "../pages/Course";
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/user" element={<User />} />
         <Route path="/faculty" element={<Faculty />} />
+        <Route path="/course" element={<Course />} />
       </Routes>
     </BrowserRouter>
   );
