@@ -45,7 +45,7 @@ const getAllSoftware = () => {
         attributes: ["sttPM", "tenPM", "phienBan", "ghiChu"],
       });
 
-      if (software) {
+      if (software.length) {
         resolve({
           errCode: 0,
           message: "Get all software successful",
@@ -53,7 +53,7 @@ const getAllSoftware = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "software list is empty",
         });
       }

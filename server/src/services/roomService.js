@@ -50,7 +50,7 @@ const getAllRoom = () => {
         attributes: ["sttPhong", "tenPhong", "soMay", "cauHinhMay", "ghiChu"],
       });
 
-      if (room) {
+      if (room.length) {
         resolve({
           errCode: 0,
           message: "Get all room successful",
@@ -58,7 +58,7 @@ const getAllRoom = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "Room list is empty",
         });
       }

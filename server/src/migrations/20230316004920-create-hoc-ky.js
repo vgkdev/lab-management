@@ -7,6 +7,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
+      namHoc: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        references: {
+          model: "NamHoc",
+          key: "namHoc",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      soTuan: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

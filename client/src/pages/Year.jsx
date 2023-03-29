@@ -14,7 +14,7 @@ const Year = (props) => {
   const [show, setShow] = useState(false);
   const [namHoc, setNamHoc] = useState("");
   const [oldNamHoc, setOldNamHoc] = useState("");
-
+  const [loadingData, setLoadingData] = useState(true);
   const [formEidt, setFormEidt] = useState(false);
   const [errMessage, setErrMessage] = useState("");
 
@@ -38,14 +38,17 @@ const Year = (props) => {
       try {
         if (props.listYear.length !== 0) {
           console.log("check list year props redux", props.listYear);
+          setLoadingData(false);
           return;
         }
         const listYear = await getAllYear();
 
-        if (!listYear) {
+        if (listYear.data.errCode !== 0) {
           console.log("year not found");
+          setLoadingData(false);
         } else {
           props.setListYear(listYear.data.year);
+          setLoadingData(false);
           console.log("check list year: ", listYear.data.year);
         }
       } catch (e) {
@@ -218,16 +221,24 @@ const Year = (props) => {
 
       <div className="row bg-white p-4 fs-4 fw-semibold">Quản lý năm học</div>
 
-      {props.listYear.length !== 0 ? (
-        <div className="row bg-white mt-4 mx-3 p-4">
-          <div className="row my-3 justify-content-end">
-            <div className="col-2">
-              <Button variant="primary" onClick={handleShowModalCreate}>
-                Thêm năm học
-              </Button>
-            </div>
+      <div className="row bg-white mt-4 mx-3 p-4">
+        <div className="row my-3 justify-content-end">
+          <div className="col-2">
+            <Button variant="primary" onClick={handleShowModalCreate}>
+              Thêm đơn vị
+            </Button>
           </div>
+        </div>
 
+        {loadingData && (
+          <div className="row justify-content-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+
+        {!loadingData && props.listYear.length !== 0 && (
           <DataTable
             columns={columns}
             data={data}
@@ -237,14 +248,14 @@ const Year = (props) => {
             handleShowModalEdit={handleShowModalEdit}
             handleDelete={handleDeleteYear}
           />
-        </div>
-      ) : (
-        <div className="row justify-content-center my-5">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      )}
+        )}
+
+        {!loadingData && props.listYear.length === 0 && (
+          <div className="row my-4">
+            <p className="text-center">Danh sách trống !</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

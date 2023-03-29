@@ -15,11 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       HocKy.hasMany(models.NhomTH, {
         foreignKey: "fk_HocKy_NhomTH",
       });
+      HocKy.belongsTo(models.NamHoc);
     }
   }
   HocKy.init(
     {
       hocKy: DataTypes.INTEGER,
+      namHoc: DataTypes.STRING,
+      soTuan: DataTypes.INTEGER,
     },
     {
       sequelize,

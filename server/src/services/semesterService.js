@@ -46,7 +46,7 @@ const getAllSemester = () => {
         attributes: ["hocKy"],
       });
 
-      if (semester) {
+      if (semester.length) {
         resolve({
           errCode: 0,
           message: "Get all semester successful",
@@ -54,7 +54,7 @@ const getAllSemester = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "semester list is empty",
         });
       }

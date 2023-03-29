@@ -165,7 +165,8 @@ const getAllUsers = () => {
         ],
       });
 
-      if (user) {
+      console.log(user.length);
+      if (user.length) {
         resolve({
           errCode: 0,
           message: "Get all user successful",

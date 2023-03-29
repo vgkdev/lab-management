@@ -43,7 +43,7 @@ const getAllFaculty = () => {
         attributes: ["maDV", "tenDV"],
       });
 
-      if (faculty) {
+      if (faculty.length) {
         resolve({
           errCode: 0,
           message: "Get all faculty successful",

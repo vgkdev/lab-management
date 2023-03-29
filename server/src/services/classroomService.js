@@ -54,7 +54,7 @@ const getAllClassroom = () => {
         ],
       });
 
-      if (classroom) {
+      if (classroom.length) {
         resolve({
           errCode: 0,
           message: "Get all classroom successful",
@@ -62,7 +62,7 @@ const getAllClassroom = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "classroom list is empty",
         });
       }

@@ -23,6 +23,7 @@ const User = (props) => {
   const [chucVu, setChucVu] = useState("");
   const [formEidtUser, setFormEidtUser] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+  const [loadingData, setLoadingData] = useState(true);
 
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -68,15 +69,18 @@ const User = (props) => {
       try {
         if (props.listUser.length !== 0) {
           setUser(props.listUser);
+          setLoadingData(false);
           return;
         }
         const listUser = await getAllUser();
 
-        if (!listUser) {
+        if (listUser.data.errCode !== 0) {
+          setLoadingData(false);
           console.log("not found");
         } else {
           setUser(listUser.data.user);
           props.setListUser(listUser.data.user);
+          setLoadingData(false);
           console.log(listUser.data.user);
         }
 
@@ -85,7 +89,7 @@ const User = (props) => {
         }
         const listFaculty = await getAllFaculty();
 
-        if (!listFaculty) {
+        if (listFaculty.data.errCode !== 0) {
           console.log("faculty not found");
         } else {
           props.setListFaculty(listFaculty.data.faculty);
@@ -328,11 +332,17 @@ const User = (props) => {
 
               <Form.Group as={Col}>
                 <Form.Label>Chức vụ</Form.Label>
-                <Form.Control
-                  placeholder="Chức vụ"
-                  value={chucVu}
+                <Form.Select
+                  value={chucVu || ""}
                   onChange={(event) => setChucVu(event.target.value)}
-                />
+                >
+                  <option value="" className="text-center">
+                    --Chức vụ--
+                  </option>
+                  <option>Admin</option>
+                  <option>Giảng viên</option>
+                  <option>CB sắp lịch TH</option>
+                </Form.Select>
               </Form.Group>
 
               <Form.Group as={Col}>
@@ -369,16 +379,24 @@ const User = (props) => {
 
       <div className="row bg-white p-4 fs-4 fw-semibold">Quản lý cán bộ</div>
 
-      {user.length ? (
-        <div className="row bg-white mt-4 mx-3 p-4">
-          <div className="row my-3 justify-content-end">
-            <div className="col-2">
-              <Button variant="primary" onClick={handleShowModalCreate}>
-                Thêm cán bộ
-              </Button>
-            </div>
+      <div className="row bg-white mt-4 mx-3 p-4">
+        <div className="row my-3 justify-content-end">
+          <div className="col-2">
+            <Button variant="primary" onClick={handleShowModalCreate}>
+              Thêm cán bộ
+            </Button>
           </div>
+        </div>
 
+        {loadingData && (
+          <div className="row justify-content-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+
+        {!loadingData && user.length !== 0 && (
           <DataTable
             columns={columns}
             data={data}
@@ -388,14 +406,14 @@ const User = (props) => {
             handleShowModalEdit={handleShowModalEdit}
             handleDelete={handleDeleteUser}
           />
-        </div>
-      ) : (
-        <div className="row justify-content-center my-5">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      )}
+        )}
+
+        {!loadingData && user.length === 0 && (
+          <div className="row my-4">
+            <p className="text-center">Danh sách trống !</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const getAllYear = () => {
         attributes: ["namHoc"],
       });
 
-      if (year) {
+      if (year.length) {
         resolve({
           errCode: 0,
           message: "Get all year successful",
@@ -51,7 +51,7 @@ const getAllYear = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "Year list is empty",
         });
       }
@@ -140,7 +140,7 @@ const deleteYear = (namHoc) => {
         });
       } else {
         resolve({
-          errCode: 2,
+          errCode: 3,
           message: "Year not found !",
         });
       }

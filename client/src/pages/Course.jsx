@@ -17,6 +17,7 @@ const Course = (props) => {
   const [tenNHP, setTenNHP] = useState("");
   const [formEidt, setFormEidt] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+  const [loadingData, setLoadingData] = useState(true);
 
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -42,14 +43,17 @@ const Course = (props) => {
       try {
         if (props.listCourse.length !== 0) {
           console.log("check list course props redux", props.listCourse);
+          setLoadingData(false);
           return;
         }
         const listCourse = await getAllCourse();
 
-        if (!listCourse) {
+        if (listCourse.data.errCode !== 0) {
           console.log("course not found");
+          setLoadingData(false);
         } else {
           props.setListCourse(listCourse.data.course);
+          setLoadingData(false);
           console.log("check list course: ", listCourse.data.course);
         }
       } catch (e) {
@@ -236,16 +240,24 @@ const Course = (props) => {
 
       <div className="row bg-white p-4 fs-4 fw-semibold">Quản lý học phần</div>
 
-      {props.listCourse.length !== 0 ? (
-        <div className="row bg-white mt-4 mx-3 p-4">
-          <div className="row my-3 justify-content-end">
-            <div className="col-2">
-              <Button variant="primary" onClick={handleShowModalCreate}>
-                Thêm học phần
-              </Button>
-            </div>
+      <div className="row bg-white mt-4 mx-3 p-4">
+        <div className="row my-3 justify-content-end">
+          <div className="col-2">
+            <Button variant="primary" onClick={handleShowModalCreate}>
+              Thêm học phần
+            </Button>
           </div>
+        </div>
 
+        {loadingData && (
+          <div className="row justify-content-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+
+        {!loadingData && props.listCourse.length !== 0 && (
           <DataTable
             columns={columns}
             data={data}
@@ -255,14 +267,14 @@ const Course = (props) => {
             handleShowModalEdit={handleShowModalEdit}
             handleDelete={handleDeleteCourse}
           />
-        </div>
-      ) : (
-        <div className="row justify-content-center my-5">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      )}
+        )}
+
+        {!loadingData && props.listCourse.length === 0 && (
+          <div className="row my-4">
+            <p className="text-center">Danh sách trống !</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

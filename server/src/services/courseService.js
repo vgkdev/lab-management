@@ -44,7 +44,7 @@ const getAllCourse = () => {
         attributes: ["maHP", "tenNHP"],
       });
 
-      if (course) {
+      if (course.length) {
         resolve({
           errCode: 0,
           message: "Get all course successful",
@@ -52,7 +52,7 @@ const getAllCourse = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "Course list is empty",
         });
       }

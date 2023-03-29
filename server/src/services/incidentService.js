@@ -56,7 +56,7 @@ const getAllIncident = () => {
         ],
       });
 
-      if (incident) {
+      if (incident.length) {
         resolve({
           errCode: 0,
           message: "Get all incident successful",
@@ -64,7 +64,7 @@ const getAllIncident = () => {
         });
       } else {
         resolve({
-          errCode: 0,
+          errCode: 3,
           message: "incident list is empty",
         });
       }
