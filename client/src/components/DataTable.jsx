@@ -53,6 +53,7 @@ const DataTable = ({
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
+              <th>ID</th>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
@@ -74,12 +75,13 @@ const DataTable = ({
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
+                <td>{i + 1}</td>
                 {row.cells.map((cell) => {
                   return (
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
-                {/* {console.log(row.original)} */}
+                {/* {console.log(i)} */}
                 <td>
                   <Button
                     variant="light"

@@ -71,16 +71,18 @@ const editYear = (data) => {
         });
       }
 
-      const isExist = await db.NamHoc.findOne({
-        where: { namHoc: data.newNamHoc },
-        attributes: ["namHoc"],
-      });
-
-      if (isExist) {
-        resolve({
-          errCode: 2,
-          message: "Year was existed",
+      if (data.namHoc !== data.newNamHoc) {
+        const isExist = await db.NamHoc.findOne({
+          where: { namHoc: data.newNamHoc },
+          attributes: ["namHoc"],
         });
+
+        if (isExist) {
+          resolve({
+            errCode: 2,
+            message: "Year was existed",
+          });
+        }
       }
 
       const [numAffectedRows, updatedRows] = await db.NamHoc.update(
