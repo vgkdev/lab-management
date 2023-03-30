@@ -16,7 +16,10 @@ const handleEditSemester = async (req, res) => {
 };
 
 const handleDeleteSemester = async (req, res) => {
-  const message = await semesterService.deleteSemester(req.body.hocKy);
+  const message = await semesterService.deleteSemester(
+    req.body.hocKy,
+    req.body.namHoc
+  );
   return res.status(200).json(message);
 };
 

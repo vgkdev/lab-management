@@ -9,6 +9,7 @@ module.exports = {
       },
       namHoc: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
         references: {
           model: "NamHoc",

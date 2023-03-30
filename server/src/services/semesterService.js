@@ -7,8 +7,9 @@ const createNewSemester = (data) => {
       const isExist = await db.HocKy.findOne({
         where: {
           hocKy: data.hocKy,
+          namHoc: data.namHoc,
         },
-        attributes: ["hocKy"],
+        attributes: ["hocKy", "namHoc"],
       });
 
       console.log("check exist: ", isExist);
@@ -21,9 +22,11 @@ const createNewSemester = (data) => {
         const semester = await db.HocKy.create(
           {
             hocKy: data.hocKy,
+            namHoc: data.namHoc,
+            soTuan: data.soTuan,
           },
           {
-            fields: ["hocKy"],
+            fields: ["hocKy", "namHoc", "soTuan"],
           }
         );
 
@@ -43,7 +46,7 @@ const getAllSemester = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const semester = await db.HocKy.findAll({
-        attributes: ["hocKy"],
+        attributes: ["hocKy", "namHoc", "soTuan"],
       });
 
       if (semester.length) {
@@ -74,15 +77,15 @@ const editSemester = (data) => {
         });
       }
 
-      if (data.hocKy !== data.newHocKy) {
+      if (data.hocKy !== data.newHocKy || data.namHoc !== data.newNamHoc) {
         const isExist = await db.HocKy.findOne({
-          where: { hocKy: data.newHocKy },
-          attributes: ["hocKy"],
+          where: { hocKy: data.newHocKy, namHoc: data.newNamHoc },
+          attributes: ["hocKy", "namHoc"],
         });
 
         if (isExist) {
           resolve({
-            errCode: 2,
+            errCode: 1,
             message: "semester was existed",
           });
         }
@@ -91,10 +94,12 @@ const editSemester = (data) => {
       const [numAffectedRows, updatedRows] = await db.HocKy.update(
         {
           hocKy: data.newHocKy,
+          namHoc: data.newNamHoc,
+          soTuan: data.soTuan,
         },
         {
-          where: { hocKy: data.hocKy },
-          attributes: ["hocKy"],
+          where: { hocKy: data.hocKy, namHoc: data.namHoc },
+          attributes: ["hocKy", "namHoc", "soTuan"],
           returning: true,
           plain: true,
         }
@@ -103,9 +108,9 @@ const editSemester = (data) => {
 
       if (updatedRows) {
         const semester = await db.HocKy.findOne({
-          where: { hocKy: data.newHocKy },
+          where: { hocKy: data.newHocKy, namHoc: data.newNamHoc },
           raw: false,
-          attributes: ["hocKy"],
+          attributes: ["hocKy", "namHoc", "soTuan"],
         });
 
         console.log("semester updated successfully:", semester);
@@ -117,7 +122,7 @@ const editSemester = (data) => {
         });
       } else {
         resolve({
-          errCode: 1,
+          errCode: 3,
           message: "semester not found",
         });
       }
@@ -127,12 +132,15 @@ const editSemester = (data) => {
   });
 };
 
-const deleteSemester = (hocKy) => {
+const deleteSemester = (hocKy, namHoc) => {
   return new Promise(async (resolve, reject) => {
     try {
       const semester = await db.HocKy.destroy({
-        where: { hocKy: hocKy },
-        attributes: ["hocKy"],
+        where: {
+          hocKy: hocKy,
+          namHoc: namHoc,
+        },
+        attributes: ["hocKy", "namHoc"],
       });
 
       console.log("check delete semester: ", semester);
@@ -143,7 +151,7 @@ const deleteSemester = (hocKy) => {
         });
       } else {
         resolve({
-          errCode: 2,
+          errCode: 3,
           message: "semester not found !",
         });
       }

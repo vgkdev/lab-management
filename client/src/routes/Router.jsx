@@ -9,6 +9,7 @@ import User from "../pages/User";
 import Faculty from "../pages/Faculty";
 import Course from "../pages/Course";
 import Year from "../pages/Year";
+import Semester from "../pages/Semester";
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="/faculty" element={<Faculty />} />
         <Route path="/course" element={<Course />} />
         <Route path="/year" element={<Year />} />
+        <Route path="/semester" element={<Semester />} />
       </Routes>
     </BrowserRouter>
   );

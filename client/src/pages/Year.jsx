@@ -58,7 +58,7 @@ const Year = (props) => {
 
     setTimeout(() => {
       fetchData();
-    }, 1500);
+    }, 1000);
   }, [props]);
 
   const fetchDataTable = React.useCallback(
@@ -225,7 +225,7 @@ const Year = (props) => {
         <div className="row my-3 justify-content-end">
           <div className="col-2">
             <Button variant="primary" onClick={handleShowModalCreate}>
-              Thêm đơn vị
+              Thêm năm học
             </Button>
           </div>
         </div>
