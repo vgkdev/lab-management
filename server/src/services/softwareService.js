@@ -15,6 +15,9 @@ const createNewSoftware = (data) => {
           message: "software existed",
         });
       } else {
+        if (data.ghiChu === "") {
+          data.ghiChu = "Trống";
+        }
         const software = await db.PhanMem.create(
           {
             tenPM: data.tenPM,
@@ -73,18 +76,23 @@ const editSoftware = (data) => {
         });
       }
 
-      const isExist = await db.PhanMem.findOne({
-        where: { tenPM: data.newTenPM },
-        attributes: ["tenPM"],
-      });
-
-      if (isExist) {
-        resolve({
-          errCode: 2,
-          message: "software was existed",
+      if (data.tenPM !== data.newTenPM) {
+        const isExist = await db.PhanMem.findOne({
+          where: { tenPM: data.newTenPM },
+          attributes: ["tenPM"],
         });
+
+        if (isExist) {
+          resolve({
+            errCode: 1,
+            message: "software was existed",
+          });
+        }
       }
 
+      if (data.ghiChu === "") {
+        data.ghiChu = "Trống";
+      }
       const [numAffectedRows, updatedRows] = await db.PhanMem.update(
         {
           tenPM: data.newTenPM,
@@ -116,7 +124,7 @@ const editSoftware = (data) => {
         });
       } else {
         resolve({
-          errCode: 1,
+          errCode: 3,
           message: "software not found",
         });
       }
@@ -142,7 +150,7 @@ const deleteSoftware = (tenPM) => {
         });
       } else {
         resolve({
-          errCode: 2,
+          errCode: 3,
           message: "Software not found !",
         });
       }

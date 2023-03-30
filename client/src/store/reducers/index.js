@@ -4,6 +4,7 @@ import facultyReducer from "./facultyReducer";
 import courseReducer from "./courseReducer";
 import yearReducer from "./yearReducer";
 import semesterReducer from "./semesterReducer";
+import softwareReducer from "./softwareReducer";
 
 export default combineReducers({
   user: userReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   course: courseReducer,
   year: yearReducer,
   semester: semesterReducer,
+  software: softwareReducer,
 });
