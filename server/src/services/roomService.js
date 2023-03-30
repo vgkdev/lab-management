@@ -69,6 +69,7 @@ const getAllRoom = () => {
 };
 
 const editRoom = (data) => {
+  console.log("check data room server: ", data.tenPhong);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.tenPhong) {
@@ -86,7 +87,7 @@ const editRoom = (data) => {
 
         if (isExist) {
           resolve({
-            errCode: 2,
+            errCode: 1,
             message: "Room was existed",
           });
         }
@@ -100,8 +101,8 @@ const editRoom = (data) => {
           ghiChu: data.ghiChu,
         },
         {
-          where: { tenPhong: data.tenPhong },
-          attributes: ["tenPhong", "soMay", "cauHinhMay", "ghiChu"],
+          where: { sttPhong: data.sttPhong },
+          attributes: ["sttPhong", "tenPhong", "soMay", "cauHinhMay", "ghiChu"],
           returning: true,
           plain: true,
         }
@@ -110,7 +111,7 @@ const editRoom = (data) => {
 
       if (updatedRows) {
         const room = await db.Phong.findOne({
-          where: { tenPhong: data.newTenPhong },
+          where: { sttPhong: data.sttPhong },
           raw: false,
           attributes: ["sttPhong", "tenPhong", "soMay", "cauHinhMay", "ghiChu"],
         });
@@ -124,7 +125,7 @@ const editRoom = (data) => {
         });
       } else {
         resolve({
-          errCode: 1,
+          errCode: 3,
           message: "Room not found",
         });
       }

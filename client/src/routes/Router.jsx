@@ -11,6 +11,7 @@ import Course from "../pages/Course";
 import Year from "../pages/Year";
 import Semester from "../pages/Semester";
 import Software from "../pages/Software";
+import Room from "../pages/Room";
 
 const Router = () => {
   return (
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path="/year" element={<Year />} />
         <Route path="/semester" element={<Semester />} />
         <Route path="/software" element={<Software />} />
+        <Route path="/room" element={<Room />} />
       </Routes>
     </BrowserRouter>
   );
