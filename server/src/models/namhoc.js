@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       Namhoc.hasMany(models.QuanLy, {
         foreignKey: "namHoc",
       });
-      Namhoc.hasMany(models.NhomTH, {
-        foreignKey: "namHoc",
-      });
       Namhoc.hasMany(models.HocKy, {
         foreignKey: "namHoc",
       });

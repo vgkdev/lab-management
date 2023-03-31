@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       HocPhan.hasMany(models.LopHP, {
         foreignKey: "maHP",
       });
-      HocPhan.hasMany(models.NhomTH, {
-        foreignKey: "maHP",
-      });
     }
   }
   HocPhan.init(

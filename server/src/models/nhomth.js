@@ -9,18 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      NhomTH.belongsTo(models.CanBo, {
-        foreignKey: "maCB",
-      });
-      NhomTH.belongsTo(models.NamHoc, {
-        foreignKey: "namHoc",
-      });
-      NhomTH.belongsTo(models.HocPhan, {
-        foreignKey: "maHP",
-      });
-      NhomTH.belongsTo(models.HocKy, {
-        foreignKey: "hocKy",
-      });
       NhomTH.belongsTo(models.LopHP, {
         foreignKey: "sttLHP",
       });
@@ -34,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       idNhom: DataTypes.INTEGER,
       soLuong: DataTypes.INTEGER,
       yeuCauPhanMem: DataTypes.STRING,
-      maCB: DataTypes.STRING,
-      namHoc: DataTypes.STRING,
-      maHP: DataTypes.STRING,
-      hocKy: DataTypes.INTEGER,
       sttLHP: DataTypes.INTEGER,
     },
     {

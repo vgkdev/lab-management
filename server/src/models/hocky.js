@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       HocKy.hasMany(models.LopHP, {
         foreignKey: "hocKy",
       });
-      HocKy.hasMany(models.NhomTH, {
-        foreignKey: "hocKy",
-      });
       HocKy.belongsTo(models.NamHoc, {
         foreignKey: "namHoc",
       });

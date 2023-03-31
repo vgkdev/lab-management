@@ -32,6 +32,13 @@ import {
   handleDeleteClassroom,
 } from "../controllers/classroomController";
 
+import {
+  handleCreateNewGroup,
+  handleGetAllGroup,
+  handleEditGroup,
+  handleDeleteGroup,
+} from "../controllers/groupController";
+
 const router = express.Router();
 
 let initAPIRoutes = (app) => {
@@ -83,6 +90,11 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-classroom", handleGetAllClassroom);
   router.put("/edit-classroom", handleEditClassroom);
   router.delete("/delete-classroom", handleDeleteClassroom);
+
+  router.post("/create-new-group", handleCreateNewGroup);
+  router.get("/get-all-group", handleGetAllGroup);
+  router.put("/edit-group", handleEditGroup);
+  router.delete("/delete-group", handleDeleteGroup);
 
   return app.use("/api/v1/", router);
 };

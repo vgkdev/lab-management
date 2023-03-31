@@ -22,9 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       CanBo.hasMany(models.SuCo, {
         foreignKey: "maCB",
       });
-      CanBo.hasMany(models.NhomTH, {
-        foreignKey: "maCB",
-      });
     }
   }
   CanBo.init(

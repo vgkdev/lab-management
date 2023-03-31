@@ -21,42 +21,6 @@ module.exports = {
       yeuCauPhanMem: {
         type: Sequelize.STRING,
       },
-      maCB: {
-        type: Sequelize.STRING,
-        references: {
-          model: "CanBo",
-          key: "maCB",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      namHoc: {
-        type: Sequelize.STRING,
-        references: {
-          model: "NamHoc",
-          key: "namHoc",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      maHP: {
-        type: Sequelize.STRING,
-        references: {
-          model: "HocPhan",
-          key: "maHP",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      hocKy: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "HocKy",
-          key: "hocKy",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
       sttLHP: {
         type: Sequelize.INTEGER,
         references: {
