@@ -1,4 +1,6 @@
 import db from "../models/index";
+import Sequelize from "sequelize";
+import { sequelize } from "../config/connectDB";
 
 const createNewIncident = (data) => {
   return new Promise(async (resolve, reject) => {
@@ -42,20 +44,32 @@ const createNewIncident = (data) => {
 const getAllIncident = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const incident = await db.SuCo.findAll({
-        attributes: [
-          "sttSuCo",
-          "noiDungPhanAnh",
-          "trangThai",
-          "noiDungKhacPhuc",
-          "ghiChuKhac",
-          "ngayPhanAnh",
-          "ngayKhacPhuc",
-          "sttPhong",
-          "maCB",
-        ],
-      });
+      const [incident, metadata] = await sequelize.query(
+        // "SELECT `SuCo`.`sttSuCo`, `SuCo`.`noiDungPhanAnh`, `SuCo`.`trangThai`, `SuCo`.`noiDungKhacPhuc`, `SuCo`.`ghiChuKhac`, `SuCo`.`ngayPhanAnh`, `SuCo`.`ngayKhacPhuc`, `SuCo`.`sttPhong`, `SuCo`.`maCB`, `CanBo`.`maCB` AS `CanBo.maCB`, `CanBo`.`hoTen` AS `hoTen` FROM `suco` AS `SuCo` LEFT OUTER JOIN `canbo` AS `CanBo` ON `SuCo`.`maCB` = `CanBo`.`maCB`"
+        "SELECT `SuCo`.`sttSuCo`, `SuCo`.`noiDungPhanAnh`, `SuCo`.`trangThai`, `SuCo`.`noiDungKhacPhuc`, `SuCo`.`ghiChuKhac`, `SuCo`.`ngayPhanAnh`, `SuCo`.`ngayKhacPhuc`, `SuCo`.`sttPhong`, `SuCo`.`maCB`, `CanBo`.`maCB` AS `CanBo.maCB`, `CanBo`.`hoTen` AS `hoTen`, `Phong`.`sttPhong` AS `Phong.sttPhong`, `Phong`.`tenPhong` AS `tenPhong` FROM `suco` AS `SuCo` LEFT OUTER JOIN `canbo` AS `CanBo` ON `SuCo`.`maCB` = `CanBo`.`maCB` LEFT OUTER JOIN `phong` AS `Phong` ON `SuCo`.`sttPhong` = `Phong`.`sttPhong`;"
+      );
 
+      // const incident = await db.SuCo.findAll({
+      //   attributes: { exclude: ["id"] },
+      //   include: [
+      //     {
+      //       model: db.CanBo,
+      //       attributes: ["maCB", "hoTen"],
+      //     },
+      //     {
+      //       model: db.Phong,
+      //       attributes: ["sttPhong", "tenPhong"],
+      //     },
+      //   ],
+      // })
+      //   .then((result) => {
+      //     console.log(result);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+
+      console.log(incident);
       if (incident.length) {
         resolve({
           errCode: 0,
@@ -150,6 +164,7 @@ const editIncident = (data) => {
 };
 
 const deleteIncident = (sttSuCo) => {
+  // console.log("check data server: ", sttSuCo);
   return new Promise(async (resolve, reject) => {
     try {
       const incident = await db.SuCo.destroy({

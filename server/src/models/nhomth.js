@@ -9,13 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      NhomTH.belongsTo(models.CanBo);
-      NhomTH.belongsTo(models.NamHoc);
-      NhomTH.belongsTo(models.HocPhan);
-      NhomTH.belongsTo(models.HocKy);
-      NhomTH.belongsTo(models.LopHP);
+      NhomTH.belongsTo(models.CanBo, {
+        foreignKey: "maCB",
+      });
+      NhomTH.belongsTo(models.NamHoc, {
+        foreignKey: "namHoc",
+      });
+      NhomTH.belongsTo(models.HocPhan, {
+        foreignKey: "maHP",
+      });
+      NhomTH.belongsTo(models.HocKy, {
+        foreignKey: "hocKy",
+      });
+      NhomTH.belongsTo(models.LopHP, {
+        foreignKey: "sttLHP",
+      });
       NhomTH.hasMany(models.LichTH, {
-        foreignKey: "fk_NhomTH_LichTH",
+        foreignKey: "idNhom",
       });
     }
   }

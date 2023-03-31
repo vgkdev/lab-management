@@ -77,8 +77,22 @@ const DataTable = ({
               <tr {...row.getRowProps()}>
                 <td>{i + 1}</td>
                 {row.cells.map((cell) => {
+                  // console.log("check cell:", cell.column.Header);
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td
+                      className={
+                        cell.column.Header === "Trạng thái"
+                          ? cell.value === "Đã xử lý"
+                            ? "text-success fw-bold"
+                            : cell.value === "Đang xử lý"
+                            ? "text-warning fw-bold"
+                            : "text-danger fw-bold"
+                          : ""
+                      }
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </td>
                   );
                 })}
                 {/* {console.log(i)} */}

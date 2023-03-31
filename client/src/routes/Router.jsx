@@ -12,6 +12,7 @@ import Year from "../pages/Year";
 import Semester from "../pages/Semester";
 import Software from "../pages/Software";
 import Room from "../pages/Room";
+import Incident from "../pages/Incident";
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
         <Route path="/semester" element={<Semester />} />
         <Route path="/software" element={<Software />} />
         <Route path="/room" element={<Room />} />
+        <Route path="/incident" element={<Incident />} />
       </Routes>
     </BrowserRouter>
   );

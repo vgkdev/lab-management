@@ -9,9 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      QuanLy.belongsTo(models.Phong);
-      QuanLy.belongsTo(models.NamHoc);
-      QuanLy.belongsTo(models.CanBo);
+      QuanLy.belongsTo(models.Phong, {
+        foreignKey: "sttPhong",
+      });
+      QuanLy.belongsTo(models.NamHoc, {
+        foreignKey: "namHoc",
+      });
+      QuanLy.belongsTo(models.CanBo, {
+        foreignKey: "maCB",
+      });
     }
   }
   QuanLy.init(

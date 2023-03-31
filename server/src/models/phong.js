@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Phong.hasMany(models.QuanLy, {
-        foreignKey: "fk_Phong_QuanLy",
+        foreignKey: "sttPhong",
       });
       Phong.hasMany(models.SuCo, {
-        foreignKey: "fk_Phong_SuCo",
+        foreignKey: "sttPhong",
       });
       Phong.hasMany(models.LichTH, {
-        foreignKey: "fk_Phong_LichTH",
+        foreignKey: "sttPhong",
       });
     }
   }

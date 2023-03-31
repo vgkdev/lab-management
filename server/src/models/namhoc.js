@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Namhoc.hasMany(models.LopHP, {
-        foreignKey: "fk_NamHoc_LopHP",
+        foreignKey: "namHoc",
       });
       Namhoc.hasMany(models.QuanLy, {
-        foreignKey: "fk_NamHoc_QuanLy",
+        foreignKey: "namHoc",
       });
       Namhoc.hasMany(models.NhomTH, {
-        foreignKey: "fk_NamHoc_NhomTH",
+        foreignKey: "namHoc",
       });
       Namhoc.hasMany(models.HocKy, {
-        foreignKey: "fk_NamHoc_HocKy",
+        foreignKey: "namHoc",
       });
     }
   }

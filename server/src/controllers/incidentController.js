@@ -16,7 +16,7 @@ const handleEditIncident = async (req, res) => {
 };
 
 const handleDeleteIncident = async (req, res) => {
-  const message = await incidentService.deleteIncident(req.body.sttPhong);
+  const message = await incidentService.deleteIncident(req.body.sttSuCo);
   return res.status(200).json(message);
 };
 

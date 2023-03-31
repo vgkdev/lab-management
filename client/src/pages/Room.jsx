@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, Form, Row, Spinner, Card, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
@@ -8,7 +8,6 @@ import {
   getAllRoom,
 } from "../api/roomAPI";
 
-import DataTable from "../components/DataTable";
 import imgPC from "../assets/pc.jpg";
 
 function ModalRoomDetail(props) {
@@ -58,33 +57,6 @@ const Room = (props) => {
   const [errMessage, setErrMessage] = useState("");
   const [roomDetail, setRoomDetail] = useState("");
 
-  const [data, setData] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-  const [pageCount, setPageCount] = React.useState(0);
-  const fetchIdRef = React.useRef(0);
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Tên phòng",
-        accessor: "tenPhong",
-      },
-      {
-        Header: "Số lượng máy",
-        accessor: "soMay",
-      },
-      {
-        Header: "Cấu hình máy",
-        accessor: "cauHinhMay",
-      },
-      {
-        Header: "Ghi chú",
-        accessor: "ghiChu",
-      },
-    ],
-    []
-  );
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -112,25 +84,6 @@ const Room = (props) => {
       fetchData();
     }, 1000);
   }, [props]);
-
-  const fetchDataTable = React.useCallback(
-    ({ pageSize, pageIndex }) => {
-      const fetchId = ++fetchIdRef.current;
-      setLoading(true);
-
-      setTimeout(() => {
-        if (fetchId === fetchIdRef.current) {
-          const startRow = pageSize * pageIndex;
-          const endRow = startRow + pageSize;
-          setData(props.listRoom.slice(startRow, endRow));
-          setPageCount(Math.ceil(props.listRoom.length / pageSize));
-
-          setLoading(false);
-        }
-      }, 1000);
-    },
-    [props.listRoom]
-  );
 
   const handleClose = () => setShow(false);
 

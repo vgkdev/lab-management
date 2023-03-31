@@ -9,8 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      SuCo.belongsTo(models.Phong);
-      SuCo.belongsTo(models.CanBo);
+      SuCo.belongsTo(models.Phong, {
+        foreignKey: "sttPhong",
+      });
+      SuCo.belongsTo(models.CanBo, {
+        foreignKey: "maCB",
+      });
     }
   }
   SuCo.init(
@@ -29,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "SuCo",
       tableName: "suco",
+      // id: false,
     }
   );
   return SuCo;

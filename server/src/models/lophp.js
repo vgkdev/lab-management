@@ -9,22 +9,32 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      LopHP.belongsTo(models.NamHoc);
+      LopHP.belongsTo(models.NamHoc, {
+        foreignKey: "namHoc",
+      });
 
       // quan hệ với bảng HocKy
-      LopHP.belongsTo(models.HocKy);
+      LopHP.belongsTo(models.HocKy, {
+        foreignKey: "hocKy",
+      });
 
       // quan hệ với bảng Thu
-      LopHP.belongsTo(models.Thu);
+      LopHP.belongsTo(models.Thu, {
+        foreignKey: "thu",
+      });
 
       // quan hệ với bảng MCB
-      LopHP.belongsTo(models.CanBo);
+      LopHP.belongsTo(models.CanBo, {
+        foreignKey: "maCB",
+      });
 
       // quan hệ với bảng MaHP
-      LopHP.belongsTo(models.HocPhan);
+      LopHP.belongsTo(models.HocPhan, {
+        foreignKey: "maHP",
+      });
 
       LopHP.hasMany(models.NhomTH, {
-        foreignKey: "fk_LopHP_NhomTH",
+        foreignKey: "sttLHP",
       });
     }
   }

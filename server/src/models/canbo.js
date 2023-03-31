@@ -9,19 +9,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      CanBo.belongsTo(models.DonVi);
+      CanBo.belongsTo(models.DonVi, {
+        foreignKey: "maDV",
+      });
 
       CanBo.hasMany(models.LopHP, {
-        foreignKey: "fk_CanBo_LopHP",
+        foreignKey: "maCB",
       });
       CanBo.hasMany(models.QuanLy, {
-        foreignKey: "fk_CanBo_QuanLy",
+        foreignKey: "maCB",
       });
       CanBo.hasMany(models.SuCo, {
-        foreignKey: "fk_CanBo_SuCo",
+        foreignKey: "maCB",
       });
       CanBo.hasMany(models.NhomTH, {
-        foreignKey: "fk_CanBo_NhomTH",
+        foreignKey: "maCB",
       });
     }
   }
@@ -40,12 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "CanBo",
       tableName: "canbo",
-      id: false,
-      autoIncrement: false,
-      primaryKey: false,
-
-      // freezeTableName: true,
       // id: false,
+      // autoIncrement: false,
+      // primaryKey: false,
     }
   );
   return CanBo;

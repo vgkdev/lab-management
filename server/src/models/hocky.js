@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       HocKy.hasMany(models.LopHP, {
-        foreignKey: "fk_HocKy_LopHP",
+        foreignKey: "hocKy",
       });
       HocKy.hasMany(models.NhomTH, {
-        foreignKey: "fk_HocKy_NhomTH",
+        foreignKey: "hocKy",
       });
-      HocKy.belongsTo(models.NamHoc);
+      HocKy.belongsTo(models.NamHoc, {
+        foreignKey: "namHoc",
+      });
     }
   }
   HocKy.init(
