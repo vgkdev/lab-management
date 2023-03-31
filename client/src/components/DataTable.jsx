@@ -46,14 +46,20 @@ const DataTable = ({
     fetchData({ pageIndex, pageSize });
   }, [fetchData, pageIndex, pageSize]);
 
+  // console.log("check header :", headerGroups[0].headers[0].Header);
   // Render the UI for your table
+  let displayID = true;
+  if (headerGroups[0].headers[0].Header === "STT LHP") {
+    displayID = false;
+  }
   return (
     <>
       <Table striped bordered hover {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              <th>ID</th>
+              {displayID ? <th>ID</th> : <></>}
+
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
@@ -75,9 +81,9 @@ const DataTable = ({
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                <td>{i + 1}</td>
+                {displayID ? <td>{i + 1}</td> : <></>}
                 {row.cells.map((cell) => {
-                  // console.log("check cell:", cell.column.Header);
+                  // console.log("check cell:", cell);
                   return (
                     <td
                       className={

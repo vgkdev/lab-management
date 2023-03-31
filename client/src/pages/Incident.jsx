@@ -119,19 +119,19 @@ const Incident = (props) => {
 
   const handleClose = () => setShow(false);
 
-  const handleShowModalCreate = () => {
-    setFormEidt(false);
-    setErrMessage("");
-    setNoiDungPhanAnh("");
-    setTrangThai("");
-    setNoiDungKhacPhuc("");
-    setGhiChuKhac("");
-    setNgayPhanAnh("");
-    setNgayKhacPhuc("");
-    setSttPhong("");
-    setMaCB("");
-    setShow(true);
-  };
+  // const handleShowModalCreate = () => {
+  //   setFormEidt(false);
+  //   setErrMessage("");
+  //   setNoiDungPhanAnh("");
+  //   setTrangThai("");
+  //   setNoiDungKhacPhuc("");
+  //   setGhiChuKhac("");
+  //   setNgayPhanAnh("");
+  //   setNgayKhacPhuc("");
+  //   setSttPhong("");
+  //   setMaCB("");
+  //   setShow(true);
+  // };
 
   const handleShowModalEdit = (incident) => {
     console.log("check incident: ", incident);

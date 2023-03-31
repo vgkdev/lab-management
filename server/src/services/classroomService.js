@@ -1,4 +1,6 @@
 import db from "../models/index";
+import { sequelize } from "../config/connectDB";
+const { QueryTypes } = require("sequelize");
 
 const createNewClassroom = (data) => {
   //   console.log("check data: ", data);
@@ -41,19 +43,30 @@ const createNewClassroom = (data) => {
 const getAllClassroom = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const classroom = await db.LopHP.findAll({
-        attributes: [
-          "sttLHP",
-          "tietBD",
-          "soTiet",
-          "namHoc",
-          "hocKy",
-          "maHP",
-          "thu",
-          "maCB",
-        ],
-      });
+      // const classroom = await db.LopHP.findAll({
+      //   attributes: [
+      //     "sttLHP",
+      //     "tietBD",
+      //     "soTiet",
+      //     "namHoc",
+      //     "hocKy",
+      //     "maHP",
+      //     "thu",
+      //     "maCB",
+      //   ],
+      // });
+      const [classroom, metadata] = await sequelize.query(
+        `SELECT LopHP.sttLHP, LopHP.tietBD, LopHP.soTiet, LopHP.namHoc, LopHP.hocKy, LopHP.maHP, LopHP.thu, LopHP.maCB, CASE WHEN NhomTH.sttLHP IS NOT NULL THEN true ELSE false END as trangThaiDK, COUNT(NhomTH.sttLHP) AS tongSoNhom FROM LopHP LEFT JOIN NhomTH ON LopHP.sttLHP = NhomTH.sttLHP GROUP BY LopHP.sttLHP, LopHP.tietBD, LopHP.soTiet, LopHP.namHoc, LopHP.hocKy, LopHP.maHP, LopHP.thu, LopHP.maCB, trangThaiDK;` // { type: QueryTypes.SELECT }
+      );
 
+      console.log("check list classroom: ", classroom);
+      for (let i = 0; i < classroom.length; i++) {
+        if (classroom[i].trangThaiDK == 1) {
+          classroom[i].trangThaiDK = "Đã đăng ký";
+        } else {
+          classroom[i].trangThaiDK = "Chưa đăng ký";
+        }
+      }
       if (classroom.length) {
         resolve({
           errCode: 0,
@@ -133,7 +146,7 @@ const editClassroom = (data) => {
         });
       } else {
         resolve({
-          errCode: 1,
+          errCode: 3,
           message: "classroom not found",
         });
       }
