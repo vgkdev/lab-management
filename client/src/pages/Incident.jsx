@@ -75,18 +75,18 @@ const Incident = (props) => {
         if (props.listIncident.length !== 0) {
           console.log("check list incident props redux", props.listIncident);
           setLoadingData(false);
-          return;
-        }
-        const listIncident = await getAllIncident();
-        console.log("check list incident: ", listIncident);
-
-        if (listIncident.data.errCode !== 0) {
-          console.log("incident not found");
-          setLoadingData(false);
         } else {
-          props.setListIncident(listIncident.data.incident);
-          setLoadingData(false);
-          console.log("check list incident: ", listIncident.data.incident);
+          const listIncident = await getAllIncident();
+          console.log("check list incident: ", listIncident);
+
+          if (listIncident.data.errCode !== 0) {
+            console.log("incident not found");
+            setLoadingData(false);
+          } else {
+            props.setListIncident(listIncident.data.incident);
+            setLoadingData(false);
+            console.log("check list incident: ", listIncident.data.incident);
+          }
         }
       } catch (e) {
         console.log("error get all incident: ", e);

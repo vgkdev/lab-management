@@ -49,7 +49,10 @@ const DataTable = ({
   // console.log("check header :", headerGroups[0].headers[0].Header);
   // Render the UI for your table
   let displayID = true;
-  if (headerGroups[0].headers[0].Header === "STT LHP") {
+  if (
+    headerGroups[0].headers[0].Header === "STT LHP" ||
+    headerGroups[0].headers[0].Header === "Nhóm"
+  ) {
     displayID = false;
   }
   return (
@@ -88,7 +91,9 @@ const DataTable = ({
                     <td
                       className={
                         cell.column.Header === "Trạng thái"
-                          ? cell.value === "Đã xử lý"
+                          ? cell.value === "Đã xử lý" ||
+                            cell.value === "Đã sắp lịch" ||
+                            cell.value === "Đã đăng ký"
                             ? "text-success fw-bold"
                             : cell.value === "Đang xử lý"
                             ? "text-warning fw-bold"

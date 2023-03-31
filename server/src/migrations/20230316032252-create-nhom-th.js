@@ -30,6 +30,19 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      tuan: {
+        type: Sequelize.INTEGER,
+      },
+      sttPhong: {
+        type: Sequelize.INTEGER,
+        // allowNull: false,
+        references: {
+          model: "Phong",
+          key: "sttPhong",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

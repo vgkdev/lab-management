@@ -70,30 +70,33 @@ const User = (props) => {
         if (props.listUser.length !== 0) {
           setUser(props.listUser);
           setLoadingData(false);
-          return;
-        }
-        const listUser = await getAllUser();
-
-        if (listUser.data.errCode !== 0) {
-          setLoadingData(false);
-          console.log("not found");
         } else {
-          setUser(listUser.data.user);
-          props.setListUser(listUser.data.user);
-          setLoadingData(false);
-          console.log(listUser.data.user);
+          const listUser = await getAllUser();
+
+          if (listUser.data.errCode !== 0) {
+            setLoadingData(false);
+            console.log("not found");
+          } else {
+            setUser(listUser.data.user);
+            props.setListUser(listUser.data.user);
+            setLoadingData(false);
+            console.log(listUser.data.user);
+          }
         }
 
         if (props.listFaculty.length !== 0) {
-          return;
-        }
-        const listFaculty = await getAllFaculty();
-
-        if (listFaculty.data.errCode !== 0) {
-          console.log("faculty not found");
+          setLoadingData(false);
         } else {
-          props.setListFaculty(listFaculty.data.faculty);
-          // console.log("check list faculty: ", listFaculty.data.faculty);
+          const listFaculty = await getAllFaculty();
+
+          if (listFaculty.data.errCode !== 0) {
+            setLoadingData(false);
+            console.log("faculty not found");
+          } else {
+            props.setListFaculty(listFaculty.data.faculty);
+            setLoadingData(false);
+            // console.log("check list faculty: ", listFaculty.data.faculty);
+          }
         }
       } catch (e) {
         console.log("error get all user: ", e);

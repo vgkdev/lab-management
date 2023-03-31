@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       NhomTH.hasMany(models.LichTH, {
         foreignKey: "idNhom",
       });
+      NhomTH.belongsTo(models.Phong, {
+        foreignKey: "sttPhong",
+      });
     }
   }
   NhomTH.init(
@@ -23,6 +26,8 @@ module.exports = (sequelize, DataTypes) => {
       soLuong: DataTypes.INTEGER,
       yeuCauPhanMem: DataTypes.STRING,
       sttLHP: DataTypes.INTEGER,
+      tuan: DataTypes.INTEGER,
+      sttPhong: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -44,17 +44,17 @@ const Course = (props) => {
         if (props.listCourse.length !== 0) {
           console.log("check list course props redux", props.listCourse);
           setLoadingData(false);
-          return;
-        }
-        const listCourse = await getAllCourse();
-
-        if (listCourse.data.errCode !== 0) {
-          console.log("course not found");
-          setLoadingData(false);
         } else {
-          props.setListCourse(listCourse.data.course);
-          setLoadingData(false);
-          console.log("check list course: ", listCourse.data.course);
+          const listCourse = await getAllCourse();
+
+          if (listCourse.data.errCode !== 0) {
+            console.log("course not found");
+            setLoadingData(false);
+          } else {
+            props.setListCourse(listCourse.data.course);
+            setLoadingData(false);
+            console.log("check list course: ", listCourse.data.course);
+          }
         }
       } catch (e) {
         console.log("error get all course: ", e);

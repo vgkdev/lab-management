@@ -11,9 +11,11 @@ const createNewGroup = (data) => {
           soLuong: data.soLuong,
           yeuCauPhanMem: data.yeuCauPhanMem,
           sttLHP: data.sttLHP,
+          tuan: data.tuan,
+          sttPhong: data.sttPhong,
         },
         {
-          fields: ["soLuong", "yeuCauPhanMem", "sttLHP"],
+          fields: ["soLuong", "yeuCauPhanMem", "sttLHP", "tuan", "sttPhong"],
         }
       );
 
@@ -31,12 +33,39 @@ const createNewGroup = (data) => {
 const getAllGroup = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const group = await db.NhomTH.findAll({
-        attributes: ["idNhom", "soLuong", "yeuCauPhanMem", "sttLHP"],
-      });
-      //   const [group, metadata] = await sequelize.query(
-      //     `SELECT NhomTH.sttLHP, NhomTH.tietBD, NhomTH.soTiet, NhomTH.namHoc, NhomTH.hocKy, NhomTH.maHP, NhomTH.thu, NhomTH.maCB, CASE WHEN NhomTH.sttLHP IS NOT NULL THEN true ELSE false END as trangThaiDK, COUNT(NhomTH.sttLHP) AS tongSoNhom FROM NhomTH LEFT JOIN NhomTH ON NhomTH.sttLHP = NhomTH.sttLHP GROUP BY NhomTH.sttLHP, NhomTH.tietBD, NhomTH.soTiet, NhomTH.namHoc, NhomTH.hocKy, NhomTH.maHP, NhomTH.thu, NhomTH.maCB, trangThaiDK;` // { type: QueryTypes.SELECT }
-      //   );
+      //   const group = await db.NhomTH.findAll({
+      //     attributes: ["idNhom", "soLuong", "yeuCauPhanMem", "sttLHP"],
+      //   });
+      const [group, metadata] = await sequelize.query(
+        `
+          SELECT 
+              NhomTH.idNhom,
+              NhomTH.soLuong,
+              NhomTH.yeuCauPhanMem,
+              NhomTH.sttLHP,
+              NhomTH.tuan,
+              LopHP.namHoc,
+              LopHP.hocKy,
+              LopHP.maHP,
+              LopHP.tietBD,
+              LopHP.soTiet,
+              Phong.sttPhong,
+              Phong.tenPhong,
+              CASE WHEN NhomTH.tuan IS NOT NULL AND Phong.sttPhong IS NOT NULL THEN true ELSE false END AS trangThaiSapLich
+          FROM 
+              NhomTH 
+              JOIN LopHP ON NhomTH.sttLHP = LopHP.sttLHP 
+              LEFT JOIN Phong ON NhomTH.sttPhong = Phong.sttPhong;
+      `
+      );
+
+      for (let i = 0; i < group.length; i++) {
+        if (group[i].trangThaiSapLich == 1) {
+          group[i].trangThaiSapLich = "Đã sắp lịch";
+        } else {
+          group[i].trangThaiSapLich = "Chưa sắp lịch";
+        }
+      }
       if (group.length) {
         resolve({
           errCode: 0,
@@ -70,10 +99,19 @@ const editGroup = (data) => {
           soLuong: data.soLuong,
           yeuCauPhanMem: data.yeuCauPhanMem,
           sttLHP: data.sttLHP,
+          tuan: data.tuan,
+          sttPhong: data.sttPhong,
         },
         {
           where: { idNhom: data.idNhom },
-          attributes: ["idNhom", "soLuong", "yeuCauPhanMem", "sttLHP"],
+          attributes: [
+            "idNhom",
+            "soLuong",
+            "yeuCauPhanMem",
+            "sttLHP",
+            "tuan",
+            "sttPhong",
+          ],
           returning: true,
           plain: true,
         }
@@ -83,7 +121,14 @@ const editGroup = (data) => {
       if (updatedRows) {
         const group = await db.NhomTH.findOne({
           where: { sttLHP: data.sttLHP },
-          attributes: ["idNhom", "soLuong", "yeuCauPhanMem", "sttLHP"],
+          attributes: [
+            "idNhom",
+            "soLuong",
+            "yeuCauPhanMem",
+            "sttLHP",
+            "tuan",
+            "sttPhong",
+          ],
         });
 
         console.log("group updated successfully:", group);

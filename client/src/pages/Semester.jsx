@@ -52,34 +52,34 @@ const Semester = (props) => {
         if (props.listSemester.length !== 0) {
           console.log("check list semester props redux", props.listSemester);
           setLoadingData(false);
-          return;
-        }
-        const listSemester = await getAllSemester();
-
-        if (listSemester.data.errCode !== 0) {
-          console.log("semester not found");
-          setLoadingData(false);
         } else {
-          props.setListSemester(listSemester.data.semester);
-          setLoadingData(false);
-          console.log("check list semester: ", listSemester.data.semester);
+          const listSemester = await getAllSemester();
+
+          if (listSemester.data.errCode !== 0) {
+            console.log("semester not found");
+            setLoadingData(false);
+          } else {
+            props.setListSemester(listSemester.data.semester);
+            setLoadingData(false);
+            console.log("check list semester: ", listSemester.data.semester);
+          }
         }
 
         // -----------------------------------------------------
         if (props.listYear.length !== 0) {
           console.log("check list year props redux", props.listYear);
           setLoadingData(false);
-          return;
-        }
-        const listYear = await getAllYear();
-
-        if (listYear.data.errCode !== 0) {
-          console.log("year not found");
-          setLoadingData(false);
         } else {
-          props.setListYear(listYear.data.year);
-          setLoadingData(false);
-          console.log("check list year: ", listYear.data.year);
+          const listYear = await getAllYear();
+
+          if (listYear.data.errCode !== 0) {
+            console.log("year not found");
+            setLoadingData(false);
+          } else {
+            props.setListYear(listYear.data.year);
+            setLoadingData(false);
+            console.log("check list year: ", listYear.data.year);
+          }
         }
       } catch (e) {
         console.log("error get all semester: ", e);

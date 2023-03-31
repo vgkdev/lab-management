@@ -63,17 +63,17 @@ const Room = (props) => {
         if (props.listRoom.length !== 0) {
           console.log("check list room props redux", props.listRoom);
           setLoadingData(false);
-          return;
-        }
-        const listRoom = await getAllRoom();
-
-        if (listRoom.data.errCode !== 0) {
-          console.log("room not found");
-          setLoadingData(false);
         } else {
-          props.setListRoom(listRoom.data.room);
-          setLoadingData(false);
-          console.log("check list room: ", listRoom.data.room);
+          const listRoom = await getAllRoom();
+
+          if (listRoom.data.errCode !== 0) {
+            console.log("room not found");
+            setLoadingData(false);
+          } else {
+            props.setListRoom(listRoom.data.room);
+            setLoadingData(false);
+            console.log("check list room: ", listRoom.data.room);
+          }
         }
       } catch (e) {
         console.log("error get all room: ", e);

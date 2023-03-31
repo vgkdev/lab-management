@@ -44,17 +44,17 @@ const Faculty = (props) => {
         if (props.listFaculty.length !== 0) {
           console.log("check list faculty", props.listFaculty);
           setLoadingData(false);
-          return;
-        }
-        const listFaculty = await getAllFaculty();
-
-        if (listFaculty.data.errCode !== 0) {
-          console.log("faculty not found");
-          setLoadingData(false);
         } else {
-          props.setListFaculty(listFaculty.data.faculty);
-          setLoadingData(false);
-          // console.log("check list faculty: ", listFaculty.data.faculty);
+          const listFaculty = await getAllFaculty();
+
+          if (listFaculty.data.errCode !== 0) {
+            console.log("faculty not found");
+            setLoadingData(false);
+          } else {
+            props.setListFaculty(listFaculty.data.faculty);
+            setLoadingData(false);
+            // console.log("check list faculty: ", listFaculty.data.faculty);
+          }
         }
       } catch (e) {
         console.log("error get all faculty: ", e);

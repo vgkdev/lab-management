@@ -52,6 +52,9 @@ function NavBar() {
               <NavDropdown.Item as={NavLink} to={"/classroom"}>
                 Lớp học phần
               </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to={"/group"}>
+                Nhóm thực hành
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav>

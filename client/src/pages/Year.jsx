@@ -39,17 +39,17 @@ const Year = (props) => {
         if (props.listYear.length !== 0) {
           console.log("check list year props redux", props.listYear);
           setLoadingData(false);
-          return;
-        }
-        const listYear = await getAllYear();
-
-        if (listYear.data.errCode !== 0) {
-          console.log("year not found");
-          setLoadingData(false);
         } else {
-          props.setListYear(listYear.data.year);
-          setLoadingData(false);
-          console.log("check list year: ", listYear.data.year);
+          const listYear = await getAllYear();
+
+          if (listYear.data.errCode !== 0) {
+            console.log("year not found");
+            setLoadingData(false);
+          } else {
+            props.setListYear(listYear.data.year);
+            setLoadingData(false);
+            console.log("check list year: ", listYear.data.year);
+          }
         }
       } catch (e) {
         console.log("error get all year: ", e);

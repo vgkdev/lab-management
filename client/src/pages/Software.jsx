@@ -49,17 +49,17 @@ const Software = (props) => {
         if (props.listSoftware.length !== 0) {
           console.log("check list software props redux", props.listSoftware);
           setLoadingData(false);
-          return;
-        }
-        const listSoftware = await getAllSoftware();
-
-        if (listSoftware.data.errCode !== 0) {
-          console.log("software not found");
-          setLoadingData(false);
         } else {
-          props.setListSoftware(listSoftware.data.software);
-          setLoadingData(false);
-          console.log("check list software: ", listSoftware.data.software);
+          const listSoftware = await getAllSoftware();
+
+          if (listSoftware.data.errCode !== 0) {
+            console.log("software not found");
+            setLoadingData(false);
+          } else {
+            props.setListSoftware(listSoftware.data.software);
+            setLoadingData(false);
+            console.log("check list software: ", listSoftware.data.software);
+          }
         }
       } catch (e) {
         console.log("error get all software: ", e);
