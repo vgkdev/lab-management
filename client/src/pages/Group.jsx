@@ -23,6 +23,7 @@ const Group = (props) => {
   const [sttPhong, setSttPhong] = useState("");
   const [loadingData, setLoadingData] = useState(true);
   const [formEidt, setFormEidt] = useState(false);
+  const [formCalendar, setFormCalendar] = useState(false);
   const [errMessage, setErrMessage] = useState("");
 
   const [data, setData] = React.useState([]);
@@ -70,11 +71,11 @@ const Group = (props) => {
       },
       {
         Header: "Số tuần",
-        accessor: "tuan",
+        accessor: "soTuan",
       },
       {
-        Header: "Phòng",
-        accessor: "tenPhong",
+        Header: "STT Phòng",
+        accessor: "sttPhong",
       },
       {
         Header: "Trạng thái",
@@ -186,6 +187,7 @@ const Group = (props) => {
 
   const handleShowModalCreate = () => {
     setFormEidt(false);
+    setFormCalendar(false);
     setErrMessage("");
     setSoLuong("");
     setYeuCauPhanMem("");
@@ -197,7 +199,22 @@ const Group = (props) => {
 
   const handleShowModalEdit = (group) => {
     setFormEidt(true);
+    setFormCalendar(false);
     setErrMessage("");
+    setIdNhom(group.idNhom);
+    setSoLuong(group.soLuong);
+    setYeuCauPhanMem(group.yeuCauPhanMem);
+    setSttLHP(group.sttLHP);
+    setSoTuan(group.soTuan);
+    setSttPhong(group.sttPhong);
+    setShow(true);
+  };
+
+  const handleShowModalCalendar = (group) => {
+    setFormEidt(false);
+    setFormCalendar(true);
+    setErrMessage("");
+    setIdNhom(group.idNhom);
     setSoLuong(group.soLuong);
     setYeuCauPhanMem(group.yeuCauPhanMem);
     setSttLHP(group.sttLHP);
@@ -207,7 +224,7 @@ const Group = (props) => {
   };
 
   const handleCreateNewGroup = async () => {
-    if (!(soLuong && yeuCauPhanMem && sttLHP && soTuan && sttPhong)) {
+    if (!(soLuong && yeuCauPhanMem && sttLHP)) {
       setErrMessage("Nhập thiếu dữ liệu !");
       return;
     }
@@ -217,7 +234,7 @@ const Group = (props) => {
         soLuong: soLuong,
         yeuCauPhanMem: yeuCauPhanMem,
         sttLHP: sttLHP,
-        tuan: soTuan,
+        soTuan: soTuan,
         sttPhong: sttPhong,
       });
 
@@ -252,7 +269,7 @@ const Group = (props) => {
         soLuong: soLuong,
         yeuCauPhanMem: yeuCauPhanMem,
         sttLHP: sttLHP,
-        tuan: soTuan,
+        soTuan: soTuan,
         sttPhong: sttPhong,
       });
 
@@ -278,7 +295,7 @@ const Group = (props) => {
   const handleDeleteGroup = async (data) => {
     // console.log("check maDV: ", maDV);
 
-    const message = await daleteGroup(data.namHoc);
+    const message = await daleteGroup(data.idNhom);
 
     if (message.data.errCode !== 0) {
       console.log("error delete group: ", message.data.message);
@@ -299,6 +316,8 @@ const Group = (props) => {
         <Modal.Header closeButton>
           {formEidt ? (
             <Modal.Title>Chỉnh sửa nhóm thực hành</Modal.Title>
+          ) : formCalendar ? (
+            <Modal.Title>Sắp lịch nhóm thực hành</Modal.Title>
           ) : (
             <Modal.Title>Thêm nhóm thực hành</Modal.Title>
           )}
@@ -311,7 +330,7 @@ const Group = (props) => {
                 <Form.Select
                   value={sttLHP || ""}
                   onChange={(event) => setSttLHP(event.target.value)}
-                  disabled={formEidt}
+                  disabled={formCalendar}
                 >
                   <option value="">--STT lớp học phần--</option>
                   {props.listClassroom.length !== 0 ? (
@@ -330,7 +349,7 @@ const Group = (props) => {
                   placeholder="Số lượng"
                   value={soLuong}
                   onChange={(event) => setSoLuong(event.target.value)}
-                  disabled={formEidt}
+                  disabled={formCalendar}
                 />
               </Form.Group>
             </Row>
@@ -340,7 +359,7 @@ const Group = (props) => {
               <Form.Select
                 value={yeuCauPhanMem || ""}
                 onChange={(event) => setYeuCauPhanMem(event.target.value)}
-                disabled={formEidt}
+                disabled={formCalendar}
               >
                 <option value="">--Phần mềm--</option>
                 {props.listSoftware.length !== 0 ? (
@@ -365,6 +384,7 @@ const Group = (props) => {
                 <Form.Select
                   value={soTuan || ""}
                   onChange={(event) => setSoTuan(event.target.value)}
+                  disabled={formEidt}
                 >
                   <option value="" className="text-center">
                     --Số tuần--
@@ -380,6 +400,7 @@ const Group = (props) => {
                 <Form.Select
                   value={sttPhong || ""}
                   onChange={(event) => setSttPhong(event.target.value)}
+                  disabled={formEidt}
                 >
                   <option value="">--STT phòng--</option>
                   {props.listRoom.length !== 0 ? (
@@ -403,7 +424,7 @@ const Group = (props) => {
             Đóng
           </Button>
 
-          {!formEidt ? (
+          {!(formEidt || formCalendar) ? (
             <Button variant="primary" onClick={handleCreateNewGroup}>
               Thêm
             </Button>
@@ -445,6 +466,7 @@ const Group = (props) => {
             pageCount={pageCount}
             handleShowModalEdit={handleShowModalEdit}
             handleDelete={handleDeleteGroup}
+            handleShowModalCalendar={handleShowModalCalendar}
           />
         )}
 

@@ -9,7 +9,7 @@ module.exports = {
       //   primaryKey: true,
       //   type: Sequelize.INTEGER,
       // },
-      tuan: {
+      soTuan: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,

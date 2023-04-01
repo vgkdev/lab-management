@@ -3,19 +3,25 @@ import { sequelize } from "../config/connectDB";
 const { QueryTypes } = require("sequelize");
 
 const createNewGroup = (data) => {
-  //   console.log("check data: ", data);
+  console.log("check data: ", data);
   return new Promise(async (resolve, reject) => {
     try {
+      if (data.soTuan === "") {
+        data.soTuan = null;
+      }
+      if (data.sttPhong === "") {
+        data.sttPhong = null;
+      }
       const group = await db.NhomTH.create(
         {
           soLuong: data.soLuong,
           yeuCauPhanMem: data.yeuCauPhanMem,
           sttLHP: data.sttLHP,
-          tuan: data.tuan,
+          soTuan: data.soTuan,
           sttPhong: data.sttPhong,
         },
         {
-          fields: ["soLuong", "yeuCauPhanMem", "sttLHP", "tuan", "sttPhong"],
+          fields: ["soLuong", "yeuCauPhanMem", "sttLHP", "soTuan", "sttPhong"],
         }
       );
 
@@ -43,7 +49,7 @@ const getAllGroup = () => {
               NhomTH.soLuong,
               NhomTH.yeuCauPhanMem,
               NhomTH.sttLHP,
-              NhomTH.tuan,
+              NhomTH.soTuan,
               LopHP.namHoc,
               LopHP.hocKy,
               LopHP.maHP,
@@ -51,7 +57,7 @@ const getAllGroup = () => {
               LopHP.soTiet,
               Phong.sttPhong,
               Phong.tenPhong,
-              CASE WHEN NhomTH.tuan IS NOT NULL AND Phong.sttPhong IS NOT NULL THEN true ELSE false END AS trangThaiSapLich
+              CASE WHEN NhomTH.soTuan IS NOT NULL AND Phong.sttPhong IS NOT NULL THEN true ELSE false END AS trangThaiSapLich
           FROM 
               NhomTH 
               JOIN LopHP ON NhomTH.sttLHP = LopHP.sttLHP 
@@ -99,7 +105,7 @@ const editGroup = (data) => {
           soLuong: data.soLuong,
           yeuCauPhanMem: data.yeuCauPhanMem,
           sttLHP: data.sttLHP,
-          tuan: data.tuan,
+          soTuan: data.soTuan,
           sttPhong: data.sttPhong,
         },
         {
@@ -109,7 +115,7 @@ const editGroup = (data) => {
             "soLuong",
             "yeuCauPhanMem",
             "sttLHP",
-            "tuan",
+            "soTuan",
             "sttPhong",
           ],
           returning: true,
@@ -126,7 +132,7 @@ const editGroup = (data) => {
             "soLuong",
             "yeuCauPhanMem",
             "sttLHP",
-            "tuan",
+            "soTuan",
             "sttPhong",
           ],
         });

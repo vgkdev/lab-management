@@ -14,9 +14,9 @@ const editGroup = (data) => {
   return axios.put(`${linkAPI}/edit-group`, data);
 };
 
-const daleteGroup = (namHoc) => {
+const daleteGroup = (idNhom) => {
   return axios.delete(`${linkAPI}/delete-group`, {
-    data: { namHoc: namHoc },
+    data: { idNhom: idNhom },
   });
 };
 

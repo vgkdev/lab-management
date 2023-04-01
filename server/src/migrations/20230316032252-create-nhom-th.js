@@ -30,7 +30,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      tuan: {
+      soTuan: {
         type: Sequelize.INTEGER,
       },
       sttPhong: {

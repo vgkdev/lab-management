@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       LichTH.belongsTo(models.Thu, {
         foreignKey: "thu",
       });
-      LichTH.belongsTo(models.Tuan, {
-        foreignKey: "tuan",
-      });
+      // LichTH.belongsTo(models.Tuan, {
+      //   foreignKey: "tuan",
+      // });
       LichTH.belongsTo(models.NhomTH, {
         foreignKey: "idNhom",
       });

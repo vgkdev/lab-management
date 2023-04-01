@@ -29,13 +29,13 @@ module.exports = {
           key: "thu",
         },
       },
-      tuan: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Tuan",
-          key: "tuan",
-        },
-      },
+      // tuan: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: "Tuan",
+      //     key: "tuan",
+      //   },
+      // },
       idNhom: {
         type: Sequelize.INTEGER,
         references: {

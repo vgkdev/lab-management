@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Tuan.hasMany(models.LichTH, {
-        foreignKey: "tuan",
+        foreignKey: "soTuan",
       });
     }
   }
   Tuan.init(
     {
-      tuan: DataTypes.INTEGER,
+      soTuan: DataTypes.INTEGER,
     },
     {
       sequelize,

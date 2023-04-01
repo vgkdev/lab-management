@@ -10,6 +10,7 @@ const DataTable = ({
   pageCount: controlledPageCount,
   handleShowModalEdit,
   handleDelete,
+  handleShowModalCalendar,
 }) => {
   const {
     getTableProps,
@@ -106,8 +107,23 @@ const DataTable = ({
                     </td>
                   );
                 })}
-                {/* {console.log(i)} */}
+                {/* {console.log(
+                  "check row datatable: ",
+                  row.cells[0].column.Header
+                )} */}
                 <td>
+                  {row.cells[0].column.Header === "Nhóm" ? (
+                    <>
+                      <Button
+                        variant="light"
+                        onClick={() => handleShowModalCalendar(row.original)}
+                      >
+                        <i className="bi bi-calendar2-week"></i>
+                      </Button>{" "}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   <Button
                     variant="light"
                     onClick={() => handleShowModalEdit(row.original)}
