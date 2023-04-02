@@ -6,11 +6,12 @@ import {
   daleteIncident,
   editIncident,
   getAllIncident,
-} from "../api/incidentAPI";
+} from "../../api/incidentAPI";
 
-import DataTable from "../components/DataTable";
+import DataTable from "../../components/DataTable";
+import { getAllRoom } from "../../api/roomAPI";
 
-const Incident = (props) => {
+const UserReport = (props) => {
   const [show, setShow] = useState(false);
   const [sttSuCo, setSttSuCo] = useState("");
   const [noiDungPhanAnh, setNoiDungPhanAnh] = useState("");
@@ -88,6 +89,23 @@ const Incident = (props) => {
             console.log("check list incident: ", listIncident.data.incident);
           }
         }
+
+        //-------------room------------------
+        if (props.listRoom.length !== 0) {
+          console.log("check list room props redux", props.listRoom);
+          setLoadingData(false);
+        } else {
+          const listRoom = await getAllRoom();
+
+          if (listRoom.data.errCode !== 0) {
+            console.log("room not found");
+            setLoadingData(false);
+          } else {
+            props.setListRoom(listRoom.data.room);
+            setLoadingData(false);
+            console.log("check list room: ", listRoom.data.room);
+          }
+        }
       } catch (e) {
         console.log("error get all incident: ", e);
       }
@@ -119,19 +137,19 @@ const Incident = (props) => {
 
   const handleClose = () => setShow(false);
 
-  // const handleShowModalCreate = () => {
-  //   setFormEidt(false);
-  //   setErrMessage("");
-  //   setNoiDungPhanAnh("");
-  //   setTrangThai("");
-  //   setNoiDungKhacPhuc("");
-  //   setGhiChuKhac("");
-  //   setNgayPhanAnh("");
-  //   setNgayKhacPhuc("");
-  //   setSttPhong("");
-  //   setMaCB("");
-  //   setShow(true);
-  // };
+  const handleShowModalCreate = () => {
+    setFormEidt(false);
+    setErrMessage("");
+    setNoiDungPhanAnh("");
+    setTrangThai("");
+    setNoiDungKhacPhuc("");
+    setGhiChuKhac("");
+    setNgayPhanAnh("");
+    setNgayKhacPhuc("");
+    setSttPhong("");
+    setMaCB("");
+    setShow(true);
+  };
 
   const handleShowModalEdit = (incident) => {
     console.log("check incident: ", incident);
@@ -150,18 +168,7 @@ const Incident = (props) => {
   };
 
   const handleCreateNewIncident = async () => {
-    if (
-      !(
-        noiDungPhanAnh &&
-        trangThai &&
-        noiDungKhacPhuc &&
-        ghiChuKhac &&
-        ngayPhanAnh &&
-        ngayKhacPhuc &&
-        sttPhong &&
-        maCB
-      )
-    ) {
+    if (!(noiDungPhanAnh && ngayPhanAnh && sttPhong)) {
       setErrMessage("Nhập thiếu dữ liệu !");
       return;
     }
@@ -169,13 +176,13 @@ const Incident = (props) => {
     try {
       const incident = await createNewIncident({
         noiDungPhanAnh: noiDungPhanAnh,
-        trangThai: trangThai,
-        noiDungKhacPhuc: noiDungKhacPhuc,
-        ghiChuKhac: ghiChuKhac,
+        trangThai: "Chưa xử lý",
+        noiDungKhacPhuc: null,
+        ghiChuKhac: null,
         ngayPhanAnh: ngayPhanAnh,
-        ngayKhacPhuc: ngayKhacPhuc,
+        ngayKhacPhuc: null,
         sttPhong: sttPhong,
-        maCB: maCB,
+        maCB: props.userData.maCB,
       });
 
       console.log("check create new incident: ", incident.data);
@@ -198,7 +205,7 @@ const Incident = (props) => {
   };
 
   const handleEditIncident = async () => {
-    if (!(noiDungKhacPhuc && ngayKhacPhuc && sttSuCo && trangThai)) {
+    if (!(sttSuCo && trangThai)) {
       setErrMessage("Hãy chọn trạng thái !");
       return;
     }
@@ -266,45 +273,39 @@ const Incident = (props) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Nội dung khắc phục</Form.Label>
-              <Form.Control
-                placeholder="Nội dụng khắc phục"
-                value={noiDungKhacPhuc}
-                onChange={(event) => setNoiDungKhacPhuc(event.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Ghi chú khác</Form.Label>
-              <Form.Control
-                placeholder="Ghi chú khác"
-                value={ghiChuKhac}
-                onChange={(event) => setGhiChuKhac(event.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Ngày khắc phục</Form.Label>
-              <Form.Control
-                placeholder="Ngày khắc phục"
-                value={ghiChuKhac}
-                onChange={(event) => setNgayKhacPhuc(event.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Trạng thái</Form.Label>
+              <Form.Label>STT phòng</Form.Label>
               <Form.Select
-                value={trangThai || ""}
-                onChange={(event) => setTrangThai(event.target.value)}
+                value={sttPhong || ""}
+                onChange={(event) => setSttPhong(event.target.value)}
+                disabled={formEidt}
               >
-                <option value="" className="text-center">
-                  --Trạng thái--
-                </option>
-                <option>Chưa xử lý</option>
-                <option>Đang xử lý</option>
-                <option>Đã xử lý</option>
+                <option value="">--STT phòng--</option>
+                {props.listRoom.length !== 0 ? (
+                  props.listRoom.map((item, i) => {
+                    return <option key={i}>{item.sttPhong}</option>;
+                  })
+                ) : (
+                  <div>Loading...</div>
+                )}
               </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Ngày phản ánh</Form.Label>
+              <Form.Control
+                placeholder="Ngày phản ánh"
+                value={ngayPhanAnh}
+                onChange={(event) => setNgayPhanAnh(event.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Nội dung phản ánh</Form.Label>
+              <Form.Control
+                placeholder="Nội dung phản ánh"
+                value={noiDungPhanAnh}
+                onChange={(event) => setNoiDungPhanAnh(event.target.value)}
+              />
             </Form.Group>
 
             <Row>
@@ -319,7 +320,7 @@ const Incident = (props) => {
 
           {!formEidt ? (
             <Button variant="primary" onClick={handleCreateNewIncident}>
-              Thêm
+              Báo cáo
             </Button>
           ) : (
             <Button variant="primary" onClick={handleEditIncident}>
@@ -329,15 +330,15 @@ const Incident = (props) => {
         </Modal.Footer>
       </Modal>
 
-      <div className="row bg-white p-4 fs-4 fw-semibold">Quản lý sự cố</div>
+      <div className="row bg-white p-4 fs-4 fw-semibold">Báo cáo sự cố</div>
 
       <div className="row bg-white mt-4 mx-3 p-4">
         <div className="row my-3 justify-content-end">
-          {/* <div className="col-2">
+          <div className="col-2">
             <Button variant="primary" onClick={handleShowModalCreate}>
-              Thêm năm học
+              Báo cáo
             </Button>
-          </div> */}
+          </div>
         </div>
 
         {loadingData && (
@@ -373,6 +374,8 @@ const Incident = (props) => {
 const mapStateToProp = (state) => {
   return {
     listIncident: state.incident.listIncident,
+    listRoom: state.room.listRoom,
+    userData: state.user.userData,
   };
 };
 
@@ -381,7 +384,10 @@ const mapDispatchToProps = (dispatch) => {
     setListIncident: (listIncident) => {
       dispatch({ type: "SET_LIST_INCIDENT", payload: listIncident });
     },
+    setListRoom: (listRoom) => {
+      dispatch({ type: "SET_LIST_ROOM", payload: listRoom });
+    },
   };
 };
 
-export default connect(mapStateToProp, mapDispatchToProps)(Incident);
+export default connect(mapStateToProp, mapDispatchToProps)(UserReport);

@@ -1,5 +1,6 @@
 import React from "react";
 import { Table, Button, Spinner } from "react-bootstrap";
+import { connect } from "react-redux";
 import { useTable, usePagination, useSortBy } from "react-table";
 
 const DataTable = ({
@@ -11,6 +12,7 @@ const DataTable = ({
   handleShowModalEdit,
   handleDelete,
   handleShowModalCalendar,
+  userData,
 }) => {
   const {
     getTableProps,
@@ -59,6 +61,7 @@ const DataTable = ({
   }
   return (
     <>
+      {/* {console.log("check user data table: ", userData)} */}
       <Table striped bordered hover {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -78,7 +81,8 @@ const DataTable = ({
                 </th>
               ))}
               {/* {console.log(headerGroup.headers[0].Header)} */}
-              {headerGroup.headers[0].Header === "Buổi" ? (
+              {headerGroup.headers[0].Header === "Buổi" ||
+              userData.chucVu !== "Admin" ? (
                 <></>
               ) : (
                 <th>Quản lý</th>
@@ -120,7 +124,8 @@ const DataTable = ({
                   "check row datatable: ",
                   row.cells[0].column.Header
                 )} */}
-                {row.cells[0].column.Header === "Buổi" ? (
+                {row.cells[0].column.Header === "Buổi" ||
+                userData.chucVu !== "Admin" ? (
                   <></>
                 ) : (
                   <td>
@@ -247,4 +252,21 @@ const DataTable = ({
   );
 };
 
-export default DataTable;
+const mapStateToProp = (state) => {
+  return {
+    userData: state.user.userData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setListIncident: (listIncident) => {
+      dispatch({ type: "SET_LIST_INCIDENT", payload: listIncident });
+    },
+    setListRoom: (listRoom) => {
+      dispatch({ type: "SET_LIST_ROOM", payload: listRoom });
+    },
+  };
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(DataTable);

@@ -55,6 +55,7 @@ const getAllGroup = () => {
               LopHP.maHP,
               LopHP.tietBD,
               LopHP.soTiet,
+              LopHP.maCB,
               Phong.sttPhong,
               Phong.tenPhong,
               CASE WHEN NhomTH.soTuan IS NOT NULL AND Phong.sttPhong IS NOT NULL THEN true ELSE false END AS trangThaiSapLich

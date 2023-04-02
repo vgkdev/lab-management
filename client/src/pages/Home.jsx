@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Button, Carousel } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import userImg from "../assets/user.jpg";
 import facultyImg from "../assets/faculty.jpg";
 import courseImg from "../assets/course.png";

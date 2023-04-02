@@ -10,7 +10,7 @@ function NavBar(props) {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand className="fs-2" as={NavLink} end to={"/"}>
-          QLTH
+          HCMUS
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -62,9 +62,7 @@ function NavBar(props) {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link onClick={props.userLogout} href="#deets">
-              Đăng xuất
-            </Nav.Link>
+            <Nav.Link onClick={props.userLogout}>Đăng xuất</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
