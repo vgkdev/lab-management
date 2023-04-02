@@ -258,7 +258,7 @@ const Group = (props) => {
   };
 
   const handleEditGroup = async () => {
-    if (!(soLuong && yeuCauPhanMem && sttLHP && soTuan && sttPhong)) {
+    if (!(soLuong && yeuCauPhanMem && sttLHP)) {
       setErrMessage("Nhập thiếu dữ liệu !");
       return;
     }

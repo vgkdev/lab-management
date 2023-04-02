@@ -92,6 +92,7 @@ const getAllGroup = () => {
 };
 
 const editGroup = (data) => {
+  console.log("check data group server: ", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.idNhom) {
@@ -99,6 +100,12 @@ const editGroup = (data) => {
           errCode: 2,
           message: "Missing parameters !",
         });
+      }
+      if (data.soTuan === "") {
+        data.soTuan = null;
+      }
+      if (data.sttPhong === "") {
+        data.sttPhong = null;
       }
 
       const [numAffectedRows, updatedRows] = await db.NhomTH.update(
