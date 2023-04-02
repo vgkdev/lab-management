@@ -49,6 +49,7 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-users", userController.handleGetAllUsers);
   router.put("/edit-user", userController.handleEditUser);
   router.delete("/delete-user", userController.handleDeleteUser);
+  router.post("/verify-user", userController.handleVerifyUser);
 
   router.post("/create-new-faculty", facultyController.handleCreateNewFaculty);
   router.get("/get-all-faculty", facultyController.handleGetAllFaculty);

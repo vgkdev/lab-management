@@ -9,6 +9,13 @@ const loginUser = (data) => {
   });
 };
 
+const verifyUser = (data) => {
+  return axios.post(`${linkAPI}/verify-user`, {
+    email: data.email,
+    password: data.password,
+  });
+};
+
 const getAllUser = () => {
   return axios.get(`${linkAPI}/get-all-users`);
 };
@@ -39,4 +46,11 @@ const editUser = (data) => {
   return axios.put(`${linkAPI}/edit-user`, data);
 };
 
-export { loginUser, getAllUser, createNewUser, deleteUser, editUser };
+export {
+  loginUser,
+  getAllUser,
+  createNewUser,
+  deleteUser,
+  editUser,
+  verifyUser,
+};

@@ -150,6 +150,49 @@ const userLogin = (data) => {
   });
 };
 
+const verifyUser = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.email || !data.password) {
+        resolve({
+          errCode: 2,
+          message: "Missing parameter !",
+        });
+      }
+
+      const user = await db.CanBo.findOne({
+        where: { email: data.email, password: data.password },
+        attributes: [
+          "maCB",
+          "maDV",
+          "hoTen",
+          "email",
+          "password",
+          "SDT",
+          "diaChi",
+          "chucVu",
+        ],
+      });
+      console.log("check user server:", user);
+
+      if (user) {
+        resolve({
+          errCode: 0,
+          message: "Verify successful",
+          user,
+        });
+      } else {
+        resolve({
+          errCode: 3,
+          message: "User not found !",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 const getAllUsers = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -294,4 +337,5 @@ module.exports = {
   getAllUsers,
   editUser,
   deleteUser,
+  verifyUser,
 };

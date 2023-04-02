@@ -12,7 +12,7 @@ const Login = (props) => {
       alert("Nhập thiếu thông tin");
       return;
     }
-    console.log(email, password);
+    // console.log(email, password);
 
     try {
       const user = await loginUser({ email, password });

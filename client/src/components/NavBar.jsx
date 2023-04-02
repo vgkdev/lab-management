@@ -3,8 +3,9 @@ import { Nav } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
-function NavBar() {
+function NavBar(props) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -61,7 +62,9 @@ function NavBar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">Đăng xuất</Nav.Link>
+            <Nav.Link onClick={props.userLogout} href="#deets">
+              Đăng xuất
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -69,4 +72,19 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+const mapStateToProp = (state) => {
+  return {
+    userData: state.user.userData,
+    token: state.user.token,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogout: () => {
+      dispatch({ type: "USER_LOGOUT" });
+    },
+  };
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(NavBar);

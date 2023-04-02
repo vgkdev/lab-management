@@ -20,6 +20,11 @@ const handleUserLogin = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const handleVerifyUser = async (req, res) => {
+  const message = await userService.verifyUser(req.body);
+  return res.status(200).json(message);
+};
+
 const handleGetAllUsers = async (req, res) => {
   const message = await userService.getAllUsers();
   return res.status(200).json(message);
@@ -42,4 +47,5 @@ module.exports = {
   handleGetAllUsers,
   handleEditUser,
   handleDeleteUser,
+  handleVerifyUser,
 };
