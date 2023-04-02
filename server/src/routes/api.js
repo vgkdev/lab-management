@@ -39,6 +39,8 @@ import {
   handleDeleteGroup,
 } from "../controllers/groupController";
 
+import { handleGetAllSchedule } from "../controllers/scheduleController";
+
 const router = express.Router();
 
 let initAPIRoutes = (app) => {
@@ -95,6 +97,8 @@ let initAPIRoutes = (app) => {
   router.get("/get-all-group", handleGetAllGroup);
   router.put("/edit-group", handleEditGroup);
   router.delete("/delete-group", handleDeleteGroup);
+
+  router.get("/get-all-schedule", handleGetAllSchedule);
 
   return app.use("/api/v1/", router);
 };

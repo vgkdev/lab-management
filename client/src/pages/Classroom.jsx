@@ -399,14 +399,12 @@ const Classroom = (props) => {
                   value={hocKy || ""}
                   onChange={(event) => setHocKy(event.target.value)}
                 >
-                  <option value="">--Học kỳ--</option>
-                  {props.listSemester.length !== 0 ? (
-                    props.listSemester.map((item, i) => {
-                      return <option key={i}>{item.hocKy}</option>;
-                    })
-                  ) : (
-                    <div>Loading...</div>
-                  )}
+                  <option value="" className="text-center">
+                    --Học kỳ--
+                  </option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
                 </Form.Select>
               </Form.Group>
             </Row>

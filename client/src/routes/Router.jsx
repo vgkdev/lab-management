@@ -15,6 +15,7 @@ import Room from "../pages/Room";
 import Incident from "../pages/Incident";
 import Classroom from "../pages/Classroom";
 import Group from "../pages/Group";
+import Schedule from "../pages/Schedule";
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
         <Route path="/incident" element={<Incident />} />
         <Route path="/classroom" element={<Classroom />} />
         <Route path="/group" element={<Group />} />
+        <Route path="/schedule" element={<Schedule />} />
       </Routes>
     </BrowserRouter>
   );

@@ -52,7 +52,8 @@ const DataTable = ({
   let displayID = true;
   if (
     headerGroups[0].headers[0].Header === "STT LHP" ||
-    headerGroups[0].headers[0].Header === "Nhóm"
+    headerGroups[0].headers[0].Header === "Nhóm" ||
+    headerGroups[0].headers[0].Header === "Buổi"
   ) {
     displayID = false;
   }
@@ -76,7 +77,13 @@ const DataTable = ({
                   </span>
                 </th>
               ))}
-              <th>Quản lý</th>
+              {/* {console.log(headerGroup.headers[0].Header)} */}
+              {headerGroup.headers[0].Header === "Buổi" ? (
+                <></>
+              ) : (
+                <th>Quản lý</th>
+              )}
+              {/* <th>Quản lý</th> */}
             </tr>
           ))}
         </thead>
@@ -91,10 +98,12 @@ const DataTable = ({
                   return (
                     <td
                       className={
-                        cell.column.Header === "Trạng thái"
+                        cell.column.Header === "Trạng thái" ||
+                        cell.column.Header === "Chức vụ"
                           ? cell.value === "Đã xử lý" ||
                             cell.value === "Đã sắp lịch" ||
-                            cell.value === "Đã đăng ký"
+                            cell.value === "Đã đăng ký" ||
+                            cell.value === "Giảng viên"
                             ? "text-success fw-bold"
                             : cell.value === "Đang xử lý"
                             ? "text-warning fw-bold"
@@ -111,36 +120,40 @@ const DataTable = ({
                   "check row datatable: ",
                   row.cells[0].column.Header
                 )} */}
-                <td>
-                  {row.cells[0].column.Header === "Nhóm" ? (
-                    <>
-                      <Button
-                        variant="light"
-                        onClick={() => handleShowModalCalendar(row.original)}
-                      >
-                        <i className="bi bi-calendar2-week"></i>
-                      </Button>{" "}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  <Button
-                    variant="light"
-                    onClick={() => handleShowModalEdit(row.original)}
-                  >
-                    <i className="bi bi-pencil-fill text-primary"></i>
-                  </Button>{" "}
-                  {row.original.chucVu === "Admin" ? (
-                    <></>
-                  ) : (
+                {row.cells[0].column.Header === "Buổi" ? (
+                  <></>
+                ) : (
+                  <td>
+                    {row.cells[0].column.Header === "Nhóm" ? (
+                      <>
+                        <Button
+                          variant="light"
+                          onClick={() => handleShowModalCalendar(row.original)}
+                        >
+                          <i className="bi bi-calendar2-week"></i>
+                        </Button>{" "}
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     <Button
                       variant="light"
-                      onClick={() => handleDelete(row.original)}
+                      onClick={() => handleShowModalEdit(row.original)}
                     >
-                      <i className="bi bi-archive-fill"></i>
-                    </Button>
-                  )}
-                </td>
+                      <i className="bi bi-pencil-fill text-primary"></i>
+                    </Button>{" "}
+                    {row.original.chucVu === "Admin" ? (
+                      <></>
+                    ) : (
+                      <Button
+                        variant="light"
+                        onClick={() => handleDelete(row.original)}
+                      >
+                        <i className="bi bi-archive-fill"></i>
+                      </Button>
+                    )}
+                  </td>
+                )}
               </tr>
             );
           })}

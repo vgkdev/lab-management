@@ -66,7 +66,7 @@ const Group = (props) => {
         accessor: "yeuCauPhanMem",
       },
       {
-        Header: "Số luọng",
+        Header: "Số lượng",
         accessor: "soLuong",
       },
       {

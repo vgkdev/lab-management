@@ -55,6 +55,9 @@ function NavBar() {
               <NavDropdown.Item as={NavLink} to={"/group"}>
                 Nhóm thực hành
               </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to={"/schedule"}>
+                Xem lịch thực hành
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav>

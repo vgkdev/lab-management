@@ -344,7 +344,7 @@ const User = (props) => {
                   </option>
                   <option>Admin</option>
                   <option>Giảng viên</option>
-                  <option>CB sắp lịch TH</option>
+                  {/* <option>CB sắp lịch TH</option> */}
                 </Form.Select>
               </Form.Group>
 

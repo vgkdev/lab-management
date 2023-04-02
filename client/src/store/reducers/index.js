@@ -9,6 +9,7 @@ import roomReducer from "./roomReducer";
 import incidentReducer from "./incidentReducer";
 import classroomReducer from "./classroomReducer";
 import groupReducer from "./groupReducer";
+import scheduleReducer from "./scheduleReducer";
 
 export default combineReducers({
   user: userReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   incident: incidentReducer,
   classroom: classroomReducer,
   group: groupReducer,
+  schedule: scheduleReducer,
 });
