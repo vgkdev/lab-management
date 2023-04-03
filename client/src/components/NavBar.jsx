@@ -62,7 +62,9 @@ function NavBar(props) {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link onClick={props.userLogout}>Đăng xuất</Nav.Link>
+            <Nav.Link as={NavLink} to={"/"} onClick={props.userLogout}>
+              Đăng xuất
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

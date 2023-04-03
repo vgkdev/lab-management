@@ -10,15 +10,17 @@ import {
 
 import DataTable from "../../components/DataTable";
 import { getAllRoom } from "../../api/roomAPI";
+import DatePicker from "react-date-picker";
 
 const UserReport = (props) => {
+  const [ngayPhanAnh, onChange] = useState(new Date());
   const [show, setShow] = useState(false);
   const [sttSuCo, setSttSuCo] = useState("");
   const [noiDungPhanAnh, setNoiDungPhanAnh] = useState("");
   const [trangThai, setTrangThai] = useState("");
   const [noiDungKhacPhuc, setNoiDungKhacPhuc] = useState("");
   const [ghiChuKhac, setGhiChuKhac] = useState("");
-  const [ngayPhanAnh, setNgayPhanAnh] = useState("");
+  // const [ngayPhanAnh, setNgayPhanAnh] = useState("");
   const [ngayKhacPhuc, setNgayKhacPhuc] = useState("");
   const [sttPhong, setSttPhong] = useState("");
   const [maCB, setMaCB] = useState("");
@@ -144,7 +146,7 @@ const UserReport = (props) => {
     setTrangThai("");
     setNoiDungKhacPhuc("");
     setGhiChuKhac("");
-    setNgayPhanAnh("");
+    // setNgayPhanAnh("");
     setNgayKhacPhuc("");
     setSttPhong("");
     setMaCB("");
@@ -160,7 +162,7 @@ const UserReport = (props) => {
     setTrangThai(incident.trangThai);
     setNoiDungKhacPhuc(incident.noiDungKhacPhuc);
     setGhiChuKhac(incident.ghiChuKhac);
-    setNgayPhanAnh(incident.ngayPhanAnh);
+    // setNgayPhanAnh(incident.ngayPhanAnh);
     setNgayKhacPhuc(incident.ngayKhacPhuc);
     setSttPhong(incident.sttPhong);
     setMaCB(incident.maCB);
@@ -292,10 +294,10 @@ const UserReport = (props) => {
 
             <Form.Group className="mb-3">
               <Form.Label>Ngày phản ánh</Form.Label>
-              <Form.Control
-                placeholder="Ngày phản ánh"
+              <DatePicker
+                className="mx-4"
+                onChange={onChange}
                 value={ngayPhanAnh}
-                onChange={(event) => setNgayPhanAnh(event.target.value)}
               />
             </Form.Group>
 

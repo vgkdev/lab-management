@@ -9,8 +9,10 @@ import {
 } from "../api/incidentAPI";
 
 import DataTable from "../components/DataTable";
+import DatePicker from "react-date-picker";
 
 const Incident = (props) => {
+  const [ngayKhacPhuc, onChange] = useState(new Date());
   const [show, setShow] = useState(false);
   const [sttSuCo, setSttSuCo] = useState("");
   const [noiDungPhanAnh, setNoiDungPhanAnh] = useState("");
@@ -18,7 +20,7 @@ const Incident = (props) => {
   const [noiDungKhacPhuc, setNoiDungKhacPhuc] = useState("");
   const [ghiChuKhac, setGhiChuKhac] = useState("");
   const [ngayPhanAnh, setNgayPhanAnh] = useState("");
-  const [ngayKhacPhuc, setNgayKhacPhuc] = useState("");
+  // const [ngayKhacPhuc, setNgayKhacPhuc] = useState("");
   const [sttPhong, setSttPhong] = useState("");
   const [maCB, setMaCB] = useState("");
 
@@ -135,6 +137,17 @@ const Incident = (props) => {
 
   const handleShowModalEdit = (incident) => {
     console.log("check incident: ", incident);
+    if (!incident.noiDungKhacPhuc) {
+      incident.noiDungKhacPhuc = "";
+    }
+
+    if (!incident.ghiChuKhac) {
+      incident.ghiChuKhac = "";
+    }
+
+    if (!incident.ngayKhacPhuc) {
+      incident.ngayKhacPhuc = "";
+    }
     setFormEidt(true);
     setErrMessage("");
     setSttSuCo(incident.sttSuCo);
@@ -143,7 +156,7 @@ const Incident = (props) => {
     setNoiDungKhacPhuc(incident.noiDungKhacPhuc);
     setGhiChuKhac(incident.ghiChuKhac);
     setNgayPhanAnh(incident.ngayPhanAnh);
-    setNgayKhacPhuc(incident.ngayKhacPhuc);
+    // setNgayKhacPhuc(incident.ngayKhacPhuc);
     setSttPhong(incident.sttPhong);
     setMaCB(incident.maCB);
     setShow(true);
@@ -285,10 +298,16 @@ const Incident = (props) => {
 
             <Form.Group className="mb-3">
               <Form.Label>Ngày khắc phục</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 placeholder="Ngày khắc phục"
-                value={ghiChuKhac}
+                value={ngayKhacPhuc}
                 onChange={(event) => setNgayKhacPhuc(event.target.value)}
+              /> */}
+
+              <DatePicker
+                className="mx-4"
+                onChange={onChange}
+                value={ngayKhacPhuc}
               />
             </Form.Group>
 
