@@ -13,7 +13,7 @@ import { getAllRoom } from "../../api/roomAPI";
 import DatePicker from "react-date-picker";
 
 const UserReport = (props) => {
-  const [ngayPhanAnh, onChange] = useState(new Date());
+  const [ngayPhanAnh, setNgayPhanAnh] = useState(new Date());
   const [show, setShow] = useState(false);
   const [sttSuCo, setSttSuCo] = useState("");
   const [noiDungPhanAnh, setNoiDungPhanAnh] = useState("");
@@ -275,6 +275,15 @@ const UserReport = (props) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
+              <Form.Label>Ngày phản ánh: </Form.Label>
+              <DatePicker
+                className="mx-2"
+                onChange={setNgayPhanAnh}
+                value={ngayPhanAnh}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
               <Form.Label>STT phòng</Form.Label>
               <Form.Select
                 value={sttPhong || ""}
@@ -290,15 +299,6 @@ const UserReport = (props) => {
                   <div>Loading...</div>
                 )}
               </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Ngày phản ánh</Form.Label>
-              <DatePicker
-                className="mx-4"
-                onChange={onChange}
-                value={ngayPhanAnh}
-              />
             </Form.Group>
 
             <Form.Group className="mb-3">
