@@ -21,9 +21,9 @@ const Home = (props) => {
     <div className="container">
       <div className="row my-5 justify-content-center">
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={userImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/user")} variant="primary">
                 Quản lý cán bộ
               </Button>
@@ -32,9 +32,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={facultyImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/faculty")} variant="primary">
                 Quản lý đơn vị
               </Button>
@@ -43,9 +43,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={courseImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/course")} variant="primary">
                 Quản lý học phần
               </Button>
@@ -54,9 +54,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={yearImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/year")} variant="primary">
                 Quản lý năm học
               </Button>
@@ -65,9 +65,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={semesterImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/semester")} variant="primary">
                 Quản lý học kỳ
               </Button>
@@ -76,9 +76,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={softwareImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/software")} variant="primary">
                 Quản lý phần mềm
               </Button>
@@ -87,9 +87,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={roomImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/room")} variant="primary">
                 Quản lý Phòng
               </Button>
@@ -98,9 +98,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={incidentImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/incident")} variant="primary">
                 Quản lý sự cố
               </Button>
@@ -109,9 +109,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={classroomImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/classroom")} variant="primary">
                 Quản lý lớp học phần
               </Button>
@@ -120,9 +120,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={groupImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/group")} variant="primary">
                 Quản lý nhóm thực hành
               </Button>
@@ -131,9 +131,9 @@ const Home = (props) => {
         </div>
 
         <div className="col-lg-2 col-md-4 col-sm-6 mt-4">
-          <Card>
+          <Card style={{ width: "200px", height: "300px" }}>
             <Card.Img variant="top" src={scheduleImg} />
-            <Card.Body>
+            <Card.Body className="row align-items-end">
               <Button onClick={() => navigate("/schedule")} variant="primary">
                 Xem lịch thực hành
               </Button>

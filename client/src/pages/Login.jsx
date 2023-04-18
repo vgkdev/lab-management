@@ -32,8 +32,16 @@ const Login = (props) => {
 
   return (
     <div className="container-fluid">
-      <div className="row justify-content-center m-5">
-        <div className="col col-lg-5 m-5">
+      <div className="row align-items-center justify-content-center m-5">
+        <div className="col-lg-6">
+          <img
+            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            className="img-fluid"
+            alt="img login"
+          />
+        </div>
+
+        <div className="col-lg-6">
           <Form style={{ borderRadius: "20px" }} className="bg-white p-4">
             <Form.Group controlId="formBasicEmail" className="my-3">
               <FormControl
